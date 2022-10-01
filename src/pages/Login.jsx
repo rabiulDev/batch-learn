@@ -7,11 +7,11 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-auth-bg bg-no-repeat bg-top bg-cover object-cover py-[50px]">
-      <div className="w-full max-w-[506px] bg-white shadow-md rounded-[15px] m-5 sm:m-0 py-[50px] sm:py-0 px-30 sm:px-16 sm:pt-[58px] sm:pb-16">
+      <div className="w-full max-w-[506px] bg-white shadow-md rounded-[15px] m-5 sm:m-0 py-[50px] sm:py-0 px-[30px] sm:px-16 sm:pt-[58px] sm:pb-16">
         <h1 className="text-center mb-[2.375rem] text-[2.125rem] leading-[2.899rem] font-extrabold font-nunito">
           Sign In
         </h1>
-        <div className="py-[50px] px-[30px] sm:p-0">
+        <div>
           <Form
             layout="vertical"
             requiredMark="optional"
