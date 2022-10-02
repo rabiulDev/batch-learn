@@ -2,12 +2,43 @@ import React, { useState } from "react";
 import { Button, Divider, Form, Input, Modal } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+  const [errMessage, setErrMessage] = useState(null);
+  const navigate = useNavigate();
   const [form] = Form.useForm();
-  const onFinish = (data) => {
-    console.log(data);
-    form.resetFields();
+
+  const onFinish = async (data) => {
+    const loginData = {
+      email: data.email,
+      password: data.password,
+    };
+
+    try {
+      form.resetFields();
+      setLoading(true);
+      const response = await axios.post(
+        "http://api.staging.batchlearn.com/api/v1/auth/login/",
+        loginData
+      );
+      if (response.data) {
+        setLoading(false);
+        setErrMessage(null);
+        localStorage.setItem(
+          "accessToken",
+          JSON.stringify(response.data.access)
+        );
+        navigate("/");
+      }
+
+      console.log(response.data);
+    } catch (err) {
+      setLoading(false);
+      setErrMessage(err.message);
+    }
   };
   const [open, setOpen] = useState(false);
 
@@ -129,17 +160,37 @@ const Login = () => {
                 />
               </Form.Item>
             </div>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-                block
-                size="large"
-              >
-                Login
-              </Button>
-            </Form.Item>
+            {errMessage && (
+              <p className="text-base text-red-500 font-nunito font-semibold">
+                Email or password is incorrect
+              </p>
+            )}
+            {loading ? (
+              <Form.Item>
+                <Button
+                  disabled
+                  className="login-form-button login_btn_loading"
+                  block
+                  size="large"
+                  loading
+                >
+                  Processing
+                </Button>
+              </Form.Item>
+            ) : (
+              <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button login_btn"
+                  block
+                  size="large"
+                >
+                  Login
+                </Button>
+              </Form.Item>
+            )}
+
             <div className="cursor-pointer text-center text-blue-500 my-5 text-base font-semibold font-nunito">
               Forgot password?
             </div>

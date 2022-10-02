@@ -44,6 +44,7 @@ const StudentRegister = () => {
             <div className="sm:flex sm:gap-6 w-full">
               <div className=" sm:w-1/2">
                 <Form.Item
+                  className="global__input"
                   name="first_name"
                   label="First Name:"
                   rules={[
@@ -58,6 +59,7 @@ const StudentRegister = () => {
               </div>
               <div className=" sm:w-1/2">
                 <Form.Item
+                  className="global__input"
                   name="last_name"
                   label="Last Name:"
                   rules={[
@@ -75,6 +77,7 @@ const StudentRegister = () => {
             <div className="sm:flex sm:gap-6 w-full">
               <div className=" sm:w-1/2">
                 <Form.Item
+                  className="global__input"
                   name="email"
                   label="Email:"
                   rules={[
@@ -93,6 +96,7 @@ const StudentRegister = () => {
               </div>
               <div className="sm:w-1/2">
                 <Form.Item
+                  className="global__input"
                   name="phone_number"
                   label="Phone:"
                   rules={[
@@ -227,8 +231,14 @@ const StudentRegister = () => {
               </Form.Item>
             </div>
 
-            <div className="flex justify-center">
-              <Button type="primary" htmlType="submit" size="large">
+            <div className="max-w-xs mx-auto">
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                block
+                className="login_btn"
+              >
                 Create account
               </Button>
             </div>

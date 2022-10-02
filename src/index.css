@@ -18,6 +18,15 @@
 .ant-input-password,
 .ant-select-selector {
   border-radius: 10px !important;
+  height: 46px !important;
+  background-color: #f9fbfc !important;
+  border: 1px solid #f2f3f7 !important;
+  width: 100% !important;
+  color: #042040 !important;
+  font-weight: 400 !important;
+}
+.ant-input-password input {
+  background-color: #f9fbfc !important;
 }
 .ant-input-group-addon {
   border-radius: 10px 0px 0px 10px !important;
@@ -29,8 +38,68 @@
 #login_first_name,
 #login_last_name {
   border-radius: 10px !important;
+  background-color: #f9fbfc !important;
 }
 
 .ant-input-affix-wrapper {
   border-radius: 10px !important;
+}
+
+.global__input input {
+  height: 46px !important;
+  background-color: #f9fbfc !important;
+  border: 1px solid #f2f3f7 !important;
+  width: 100% !important;
+  color: #042040 !important;
+  font-weight: 400 !important;
+}
+
+.ant-input-group-addon {
+  height: 46px !important;
+  background-color: #f9fbfc !important;
+  border: 1px solid #f2f3f7 !important;
+  color: #042040 !important;
+  font-weight: 400 !important;
+}
+
+.ant-input-affix-wrapper {
+  height: 46px !important;
+  background-color: #f9fbfc !important;
+  border: 1px solid #f2f3f7 !important;
+  color: #042040 !important;
+  font-weight: 400 !important;
+}
+
+.login_btn {
+  height: auto !important;
+  border-radius: 0.625rem !important;
+  border-width: 0px !important;
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(63 140 254 / var(--tw-bg-opacity)) !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+  font-size: 1rem !important;
+  line-height: 1.364rem !important;
+  font-weight: 700 !important;
+  font-family: "Nunito Sans";
+}
+.login_btn_loading {
+  height: auto !important;
+  border-radius: 0.625rem !important;
+  border-width: 0px !important;
+  --tw-bg-opacity: 1 !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+  font-size: 1rem !important;
+  line-height: 1.364rem !important;
+  font-weight: 700 !important;
+  font-family: "Nunito Sans";
+}
+.ant-modal-close-icon {
+  padding: 10px;
+  border-radius: 50%;
+  background: #f6f8fa;
+}
+.ant-modal-close-icon:hover {
+  @apply bg-blue-400 text-white;
 }
