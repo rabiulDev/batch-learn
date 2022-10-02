@@ -6,3 +6,31 @@
   border-radius: 15px !important;
   overflow: hidden !important;
 }
+
+.ant-form-item-label label {
+  font-family: "Nunito Sans";
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 22px !important;
+  color: #042040 !important;
+}
+
+.ant-input-password,
+.ant-select-selector {
+  border-radius: 10px !important;
+}
+.ant-input-group-addon {
+  border-radius: 10px 0px 0px 10px !important;
+}
+#login_phone_number {
+  border-radius: 0px 10px 10px 0px !important;
+}
+#login_email,
+#login_first_name,
+#login_last_name {
+  border-radius: 10px !important;
+}
+
+.ant-input-affix-wrapper {
+  border-radius: 10px !important;
+}
