@@ -2,23 +2,46 @@ import React from "react";
 import { Button, Checkbox, Form, Input, Select } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import axios from "axios";
 const { Option } = Select;
 const StudentRegister = () => {
   const [form] = Form.useForm();
   const onFinish = (data) => {
-    console.log(data);
+    const regData = {
+      email: data.email,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      phone_number: data.phonePrefix + data.phone_number,
+      school: data.school,
+      password: data.password,
+      is_accept: data.is_accept,
+    };
+
+    try {
+      axios
+        .post(
+          "http://api.staging.batchlearn.com/api/v1/auth/register-student/",
+          regData
+        )
+        .then((res) => console.log(res.data));
+    } catch (error) {
+      console.log(error.message);
+    }
+    console.log(regData);
     form.resetFields();
   };
+
   const prefixPhoneSelector = (
-    <Form.Item noStyle>
+    <Form.Item name="phonePrefix" noStyle>
       <Select
         initialvalues="+86"
         style={{
           width: 70,
         }}
       >
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
+        <Option value="+880">+880</Option>
+        <Option value="+860">+860</Option>
+        <Option value="+870">+870</Option>
       </Select>
     </Form.Item>
   );
@@ -136,8 +159,8 @@ const StudentRegister = () => {
                       width: "100%",
                     }}
                   >
-                    <Option value="abc">ABC - High School</Option>
-                    <Option value="usa">USA - High School</Option>
+                    <Option value={1}>ABC - High School</Option>
+                    <Option value={2}>USA - High School</Option>
                   </Select>
                 </Form.Item>
               </div>
