@@ -199,10 +199,11 @@ const Home = () => {
         </div>
 
         <div className="flex items-center justify-between w-full">
-          <div className="ml-9">
+          <div className="ml-9 home-icon-hover">
             <NavLink
-              to="/"
-              className={({ isActive }) => (isActive ? "active-style flex items-center font-semibold text-base font-nunito relative home_menu" : "flex items-center font-semibold text-base font-nunito relative home_menu") }
+              to=""
+              end
+              className={({ isActive }) => (isActive ? "active-home-style flex items-center font-semibold text-base font-nunito relative" : "flex items-center font-semibold text-base font-nunito text-[#042040] relative home-hover") }
             >
               <span>
                 <svg
@@ -216,7 +217,7 @@ const Home = () => {
                     clipRule="evenodd"
                     d="M2.75 5.95833C2.75 3.55189 2.77577 2.75 5.95833 2.75C9.1409 2.75 9.16667 3.55189 9.16667 5.95833C9.16667 8.36478 9.17682 9.16667 5.95833 9.16667C2.73985 9.16667 2.75 8.36478 2.75 5.95833Z"
                     fillRule="evenodd"
-                    stroke="#3f8cfe"
+                    stroke="#95A3BD"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="1.5"
@@ -225,7 +226,7 @@ const Home = () => {
                     clipRule="evenodd"
                     d="M12.8335 5.95833C12.8335 3.55189 12.8593 2.75 16.0418 2.75C19.2244 2.75 19.2502 3.55189 19.2502 5.95833C19.2502 8.36478 19.2603 9.16667 16.0418 9.16667C12.8233 9.16667 12.8335 8.36478 12.8335 5.95833Z"
                     fillRule="evenodd"
-                    stroke="#3f8cfe"
+                    stroke="#95A3BD"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="1.5"
@@ -234,7 +235,7 @@ const Home = () => {
                     clipRule="evenodd"
                     d="M2.75 16.0416C2.75 13.6351 2.77577 12.8333 5.95833 12.8333C9.1409 12.8333 9.16667 13.6351 9.16667 16.0416C9.16667 18.448 9.17682 19.2499 5.95833 19.2499C2.73985 19.2499 2.75 18.448 2.75 16.0416Z"
                     fillRule="evenodd"
-                    stroke="#3f8cfe"
+                    stroke="#95A3BD"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="1.5"
@@ -243,7 +244,7 @@ const Home = () => {
                     clipRule="evenodd"
                     d="M12.8335 16.0416C12.8335 13.6351 12.8593 12.8333 16.0418 12.8333C19.2244 12.8333 19.2502 13.6351 19.2502 16.0416C19.2502 18.448 19.2603 19.2499 16.0418 19.2499C12.8233 19.2499 12.8335 18.448 12.8335 16.0416Z"
                     fillRule="evenodd"
-                    stroke="#3f8cfe"
+                    stroke="#95A3BD"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="1.5"

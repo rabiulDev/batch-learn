@@ -144,16 +144,6 @@
   border-radius: 6px;
 }
 
-.home_menu:after {
-  content: "";
-  width: 100%;
-  height: 2px;
-  background: #3f8cfe;
-  position: absolute;
-  bottom: -26px;
-  border-radius: 20px;
-}
-
 .fc-prev-button,
 .fc-next-button {
   background-color: #fff !important;
@@ -273,13 +263,47 @@ thead tr th {
 
 .active-style-sidenav {
   background-color: #e6f7ff;
-  padding-left: 8px ;
-  padding-right: 8px ;
+  padding-left: 8px;
+  padding-right: 8px;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 6px;
 }
 
-.active-style-sidenav>svg>g>path {
-  fill:#3f8cfe ;
+.active-style-sidenav > svg > g > path {
+  fill: #3f8cfe;
+}
+
+.active-home-style:after {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background: #3f8cfe;
+  position: absolute;
+  bottom: -26px;
+  border-radius: 20px;
+}
+
+.active-home-style > span > svg > path {
+  stroke: #3f8cfe;
+}
+
+.home-icon-hover:hover > .home-hover > span > svg > path {
+  stroke: #3f8cfe;
+}
+.home-icon-hover:hover > .home-hover {
+  color: #3f8cfe !important;
+}
+.home-icon-hover:hover > .home-hover:after {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background: #3f8cfe;
+  position: absolute;
+  bottom: -26px;
+  border-radius: 20px;
+}
+
+a {
+  transition-duration: 0s !important;
 }

@@ -33,7 +33,6 @@ const Calender = () => {
   
   
   })
- console.log(classEvents)
   return (
     <>
       {/* DASHBOARD BREADCUMBER  */}

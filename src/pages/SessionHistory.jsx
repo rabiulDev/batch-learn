@@ -12,7 +12,6 @@ const SessionHistory = () => {
     (state) => state.sessionHistory
   );
 
-  console.log(allHistory.results);
 
   const columns = [
     {
