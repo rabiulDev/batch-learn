@@ -1,25 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
-
 import interactionPlugin from "@fullcalendar/interaction";
-
 import SessionModal from "./SessionModal";
+import { useDispatch, useSelector } from "react-redux";
+import { loadClassRoomData } from "../app/features/classroom";
+import useAuth from "../auth/useAuth";
 
 const Calender = () => {
+  const { fetchData } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [date, setDate] = useState();
-
+  const dispatch = useDispatch();
+  const { isLoading, allClasses, isError } = useSelector(
+    (state) => state.classroom
+  );
   const calendarEventHandler = (event) => {
-    console.log(event)
     setDate(event.dateStr);
     setOpenModal(true);
   };
 
+  useEffect(() => {
+    dispatch(loadClassRoomData(fetchData));
+  }, []);
+
+
+  const classEvents = allClasses?.map((data)=>{
+    
+   return {title: data.title, date: data.class_date} 
+  
+  
+  })
+ console.log(classEvents)
   return (
     <>
+      {/* DASHBOARD BREADCUMBER  */}
       <div className="mb-9 flex items-center gap-2.5">
         <span>
           <svg
@@ -78,7 +95,9 @@ const Calender = () => {
             <line stroke="#8391A9" x2="12" y1="0.5" y2="0.5"></line>
           </svg>
         </span>
-        <p className="m-0 font-semibold font-nunito text-[14px] text-gray-400 leading-6">Dashboard</p>
+        <p className="m-0 font-semibold font-nunito text-[14px] text-gray-400 leading-6">
+          Dashboard
+        </p>
       </div>
 
       <div className="grid grid-cols-12 gap-6 w-full">
@@ -104,6 +123,7 @@ const Calender = () => {
               list: "List",
             }}
             dateClick={(event) => calendarEventHandler(event)}
+            events = {classEvents}
           />
 
           <SessionModal
