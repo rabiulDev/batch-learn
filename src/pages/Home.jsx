@@ -202,7 +202,7 @@ const Home = () => {
           <div className="ml-9">
             <NavLink
               to="/"
-              className={`({ isActive }) => (isActive ? "text-[#3f8cfe] home_menu" : "text-[#042040]") flex items-center font-semibold text-base font-nunito relative home_menu`}
+              className={({ isActive }) => (isActive ? "active-style flex items-center font-semibold text-base font-nunito relative home_menu" : "flex items-center font-semibold text-base font-nunito relative home_menu") }
             >
               <span>
                 <svg
@@ -295,7 +295,7 @@ const Home = () => {
           <span className="flex items-center justify-center h-[40px] w-full">
             <NavLink
               to="/session-history"
-              // className={({ isActive }) => (isActive ? "bg-[#3f8cfe] " : "")}
+              className={({ isActive }) => (isActive ? " active-style-sidenav " : "")}
             >
               <svg
                 width="20"

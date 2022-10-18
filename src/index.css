@@ -44,10 +44,11 @@
 .ant-input-affix-wrapper {
   border-radius: 10px !important;
 }
-.ant-input-affix-wrapper-status-success input{
+.ant-input-affix-wrapper-status-success input {
   background-color: #f9fbfc !important;
 }
-.global__input input, .ant-picker {
+.global__input input,
+.ant-picker {
   border-radius: 10px !important;
   height: 46px !important;
   background-color: #f9fbfc !important;
@@ -242,4 +243,43 @@
   top: -10px !important;
 
   opacity: 1 !important;
+}
+
+th::before {
+  content: none !important;
+}
+thead tr th {
+  background: transparent !important;
+  font-family: "Nunito Sans";
+  color: #042040 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+.ant-table-tbody > tr:nth-child(odd) td {
+  background: #fbfcfe;
+}
+
+.ant-table-tbody > tr > td {
+  font-family: "Nunito Sans";
+  border-bottom: none !important;
+  color: #364a61 !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 26px;
+  padding: 16px !important;
+  overflow-wrap: break-word !important;
+}
+
+.active-style-sidenav {
+  background-color: #e6f7ff;
+  padding-left: 8px ;
+  padding-right: 8px ;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 6px;
+}
+
+.active-style-sidenav>svg>g>path {
+  fill:#3f8cfe ;
 }
