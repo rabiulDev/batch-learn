@@ -12,7 +12,6 @@ const SessionHistory = () => {
     (state) => state.sessionHistory
   );
 
-
   const columns = [
     {
       title: "Title",
@@ -101,6 +100,7 @@ const SessionHistory = () => {
       </div>
 
       <Table
+        loading={isLoading}
         columns={columns}
         dataSource={data}
         pagination={{
