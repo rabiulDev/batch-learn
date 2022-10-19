@@ -1,10 +1,11 @@
 import React from "react";
 import { Tabs } from "antd";
 import Cards from "../components/Cards";
+import InvoiceTable from "../components/InvoiceTable";
 const Billings = () => {
 
   const onChange = (key) => {
-    console.log(key);
+    // console.log(key);
   };
 
   return (
@@ -68,7 +69,7 @@ const Billings = () => {
           {
             label: `Invoices`,
             key: "2",
-            children: `Content of Tab Pane 2`,
+            children: <InvoiceTable/>,
           }
         ]}
       />
