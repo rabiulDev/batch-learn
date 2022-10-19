@@ -325,8 +325,16 @@ a {
   color: #042040 !important;
  
 }
-
-
+.card-number-color {
+  font-family: Nunito Sans, sans-serif;
+  font-weight: 800;
+  --tw-text-opacity: 1;
+  color: rgb(4 32 64 / var(--tw-text-opacity));
+}
+.card-footer-bg {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(4 32 64 / var(--tw-bg-opacity)) !important;
+}
 .bg-visa {
   background-image: linear-gradient(167deg,#00d4ff6b,rgba(63,140,254,.85) 78%,rgb(0 103 255 / 67%)) !important;
 }

@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export const loadClassEventData = createAsyncThunk(
-  "classroom/data",
+  "classEvent/data",
   async (fetchData, { rejectWithValue }) => {
     try {
       const response = await fetchData.get(
@@ -23,7 +23,7 @@ export const loadClassEventData = createAsyncThunk(
 );
 
 export const classEventSlice = createSlice({
-  name: "classroom",
+  name: "classEvent",
   initialState,
   reducers: {},
 
