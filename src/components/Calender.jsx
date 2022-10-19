@@ -6,7 +6,7 @@ import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import SessionModal from "./SessionModal";
 import { useDispatch, useSelector } from "react-redux";
-import { loadClassRoomData } from "../app/features/classroom";
+import { loadClassEventData } from "../app/features/classEvents";
 import useAuth from "../auth/useAuth";
 
 const Calender = () => {
@@ -15,7 +15,7 @@ const Calender = () => {
   const [date, setDate] = useState();
   const dispatch = useDispatch();
   const { isLoading, allClasses, isError } = useSelector(
-    (state) => state.classroom
+    (state) => state.classEvents
   );
   const calendarEventHandler = (event) => {
     setDate(event.dateStr);
@@ -23,7 +23,7 @@ const Calender = () => {
   };
 
   useEffect(() => {
-    dispatch(loadClassRoomData(fetchData));
+    dispatch(loadClassEventData(fetchData));
   }, []);
 
 

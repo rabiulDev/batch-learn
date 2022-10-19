@@ -1,6 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {BsPlusLg} from "react-icons/bs"
+import { useDispatch, useSelector } from "react-redux";
+import {loadSavedCards} from "../app/features/savedCards"
+import useAuth from "../auth/useAuth"
+
 const Cards = () => {
+  const {fetchData} = useAuth();
+ const dispatch = useDispatch()
+ const {isLoading, allCards, isError} = useSelector((state) => state.savedCards)
+
+ useEffect(() => {
+  dispatch(loadSavedCards(fetchData))
+ }, [])
+
+ console.log(allCards)
   return (
     <div>
       <div className="w-full flex justify-end mb-5">

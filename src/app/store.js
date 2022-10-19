@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import classroomReducer from "./features/classroom"
-import historyReducer from "./features/sessionHistory"
+import classEventsReducer from "./features/classEvents";
+import historyReducer from "./features/sessionHistory";
+import savedCardsReducer from "./features/savedCards";
+
+
 export const store = configureStore({
   reducer: {
-    classroom: classroomReducer,
-    sessionHistory: historyReducer
+    classEvents: classEventsReducer,
+    sessionHistory: historyReducer,
+    savedCards: savedCardsReducer,
   },
 });

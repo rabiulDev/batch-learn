@@ -6,7 +6,7 @@ const initialState = {
   isError: "",
 };
 
-export const loadClassRoomData = createAsyncThunk(
+export const loadClassEventData = createAsyncThunk(
   "classroom/data",
   async (fetchData, { rejectWithValue }) => {
     try {
@@ -22,26 +22,26 @@ export const loadClassRoomData = createAsyncThunk(
   }
 );
 
-export const classroomSlice = createSlice({
+export const classEventSlice = createSlice({
   name: "classroom",
   initialState,
   reducers: {},
 
   extraReducers: {
-    [loadClassRoomData.pending]: (state, action) => {
+    [loadClassEventData.pending]: (state, action) => {
       state.isLoading = true;
     },
 
-    [loadClassRoomData.fulfilled]: (state, action) => {
+    [loadClassEventData.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.allClasses = action.payload;
     },
 
-    [loadClassRoomData.rejected]: (state, action) => {
+    [loadClassEventData.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = action.payload;
     },
   },
 });
 
-export default classroomSlice.reducer;
+export default classEventSlice.reducer;
