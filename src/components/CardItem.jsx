@@ -1,8 +1,17 @@
 import React, { useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import useAuth from "../auth/useAuth";
 import DeleteCardConfirmModal from "./DeleteCardConfirmModal";
+import { useDispatch } from "react-redux";
+import { loadSavedCards } from "../app/features/savedCards";
+import { toast } from "react-toastify";
 
 const CardItem = ({ card }) => {
-  const [deleteCard, setDeleteCard] = useState(false)   
+  const [defaultCardLoader, setDefaultCardLoader] = useState(null);
+  const dispatch = useDispatch();
+  const { fetchData } = useAuth();
+  const [deleteCard, setDeleteCard] = useState(false);
   const { exp_month, exp_year, brand, last4 } = card.card;
   const cardIcons = [
     {
@@ -192,79 +201,127 @@ const CardItem = ({ card }) => {
     return showIcon;
   };
 
-  
+  const handleDefaultCardEvent = (id) => {
+    setDefaultCardLoader(id);
+    fetchData
+      .post(`billing/payment-methods/${id}/make_default/`)
+      .then((res) => {
+        toast.success("Default card changed", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        dispatch(loadSavedCards(fetchData));
+        setDefaultCardLoader(null);
+      })
+      .catch((err) => {
+        toast.error("Something went wrong", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      });
+  };
   return (
     <>
-    <div className="mb-5 col-span-12 sm:col-span-6 md:col-span-3 lg:col-span-4">
-      <div
-        className={`rounded-[12px] h-60 relative border-none ${
-          getCardIcon() ? getCardIcon().backGroundClass : "bg-normal-card"
-        }`}
-      >
-        {/* CARD BODY  */}
-        <div className="p-6">
-          <div className="flex justify-between">
-            <div className="flex items-center justify-center w-12 h-12">
-              {getCardIcon() ? getCardIcon().icon : normalCardIcon}
+      <div className="mb-5 col-span-12 sm:col-span-6 md:col-span-3 lg:col-span-4">
+        <div
+          className={`rounded-[12px] h-60 relative border-none ${
+            getCardIcon() ? getCardIcon().backGroundClass : "bg-normal-card"
+          }`}
+        >
+          {/* CARD BODY  */}
+          <div className="p-6">
+            <div className="flex justify-between">
+              <div className="flex items-center justify-center w-12 h-12">
+                {getCardIcon() ? getCardIcon().icon : normalCardIcon}
+              </div>
+              <div>
+                {card.default ? (
+                  <p className="text-[14px] text-white font-nunito font-extrabold">
+                    (Default)
+                  </p>
+                ) : defaultCardLoader === card.id ? (
+                  <LoadingOutlined
+                    style={{
+                      fontSize: 18,
+                    }}
+                    spin
+                  />
+                ) : (
+                  <span
+                    onClick={() => handleDefaultCardEvent(card.id)}
+                    className="cursor-pointer"
+                  >
+                    {setDefaultCardIcon}
+                  </span>
+                )}
+              </div>
             </div>
-            <div>
-              {card.default ? (
-                <p className="text-[14px] text-white font-nunito font-extrabold">
-                  (Default)
-                </p>
-              ) : (
-                <span>{setDefaultCardIcon}</span>
-              )}
-            </div>
-          </div>
 
-          <h1 className="text-lg card-number-color mt-2">
-            **** **** **** {last4}
-          </h1>
-        </div>
-        {/* CARD FOOTER  */}
-        <div className="card-footer-bg rounded-b-[12px] absolute bottom-0 left-0 w-full px-6 py-4 flex justify-between items-center">
-          <p className="text-[14px] text-[#7D8DA6] font-nunito font-semibold m-0">
-            Expires
-            <span className="block">
-              {exp_month}/{exp_year}
-            </span>
-          </p>
-          <div>
-            <button className="font-semibold" onClick={()=>setDeleteCard(card.id)}>
-              <svg
-                width="16"
-                height="18"
-                viewBox="0 0 16 18"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+            <h1 className="text-lg card-number-color mt-2">
+              **** **** **** {last4}
+            </h1>
+          </div>
+          {/* CARD FOOTER  */}
+          <div className="card-footer-bg rounded-b-[12px] absolute bottom-0 left-0 w-full px-6 py-4 flex justify-between items-center">
+            <p className="text-[14px] text-[#7D8DA6] font-nunito font-semibold m-0">
+              Expires
+              <span className="block">
+                {exp_month}/{exp_year}
+              </span>
+            </p>
+            <div>
+              <button
+                className="font-semibold"
+                onClick={() => setDeleteCard(card.id)}
               >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M8.20448 17.3333C7.07531 17.3333 5.97448 17.3208 4.88531 17.2983C3.49198 17.2708 2.52781 16.3674 2.37031 14.9408C2.10781 12.5741 1.65865 6.99575 1.65448 6.93992C1.62615 6.59575 1.88281 6.29409 2.22698 6.26659C2.56615 6.25742 2.87281 6.49575 2.90031 6.83909C2.90448 6.89575 3.35281 12.4549 3.61281 14.8033C3.70198 15.6141 4.13948 16.0324 4.91115 16.0483C6.99448 16.0924 9.12031 16.0949 11.412 16.0533C12.232 16.0374 12.6753 15.6274 12.767 14.7974C13.0253 12.4691 13.4753 6.89575 13.4803 6.83909C13.5078 6.49575 13.812 6.25575 14.1528 6.26659C14.497 6.29492 14.7536 6.59575 14.7261 6.93992C14.7211 6.99659 14.2695 12.5891 14.0095 14.9349C13.8478 16.3908 12.8861 17.2766 11.4345 17.3033C10.3236 17.3224 9.25198 17.3333 8.20448 17.3333"
-                  fill="#95A3BD"
-                ></path>{" "}
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M15.2567 4.82434H1.125C0.78 4.82434 0.5 4.54434 0.5 4.19934C0.5 3.85434 0.78 3.57434 1.125 3.57434H15.2567C15.6017 3.57434 15.8817 3.85434 15.8817 4.19934C15.8817 4.54434 15.6017 4.82434 15.2567 4.82434"
-                  fill="#95A3BD"
-                ></path>{" "}
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M12.5322 4.82437C11.5839 4.82437 10.7605 4.14854 10.5739 3.21854L10.3714 2.2052C10.3289 2.05104 10.153 1.91687 9.95302 1.91687H6.42552C6.22552 1.91687 6.04968 2.05104 5.99885 2.24354L5.80468 3.21854C5.61885 4.14854 4.79468 4.82437 3.84635 4.82437C3.50135 4.82437 3.22135 4.54437 3.22135 4.19937C3.22135 3.85437 3.50135 3.57437 3.84635 3.57437C4.20135 3.57437 4.50968 3.32104 4.57968 2.9727L4.78218 1.95937C4.98802 1.1827 5.66052 0.66687 6.42552 0.66687H9.95302C10.718 0.66687 11.3905 1.1827 11.588 1.92187L11.7997 2.9727C11.8689 3.32104 12.1772 3.57437 12.5322 3.57437C12.8772 3.57437 13.1572 3.85437 13.1572 4.19937C13.1572 4.54437 12.8772 4.82437 12.5322 4.82437"
-                  fill="#95A3BD"
-                ></path>
-              </svg>
-            </button>
+                <svg
+                  width="16"
+                  height="18"
+                  viewBox="0 0 16 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M8.20448 17.3333C7.07531 17.3333 5.97448 17.3208 4.88531 17.2983C3.49198 17.2708 2.52781 16.3674 2.37031 14.9408C2.10781 12.5741 1.65865 6.99575 1.65448 6.93992C1.62615 6.59575 1.88281 6.29409 2.22698 6.26659C2.56615 6.25742 2.87281 6.49575 2.90031 6.83909C2.90448 6.89575 3.35281 12.4549 3.61281 14.8033C3.70198 15.6141 4.13948 16.0324 4.91115 16.0483C6.99448 16.0924 9.12031 16.0949 11.412 16.0533C12.232 16.0374 12.6753 15.6274 12.767 14.7974C13.0253 12.4691 13.4753 6.89575 13.4803 6.83909C13.5078 6.49575 13.812 6.25575 14.1528 6.26659C14.497 6.29492 14.7536 6.59575 14.7261 6.93992C14.7211 6.99659 14.2695 12.5891 14.0095 14.9349C13.8478 16.3908 12.8861 17.2766 11.4345 17.3033C10.3236 17.3224 9.25198 17.3333 8.20448 17.3333"
+                    fill="#95A3BD"
+                  ></path>{" "}
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M15.2567 4.82434H1.125C0.78 4.82434 0.5 4.54434 0.5 4.19934C0.5 3.85434 0.78 3.57434 1.125 3.57434H15.2567C15.6017 3.57434 15.8817 3.85434 15.8817 4.19934C15.8817 4.54434 15.6017 4.82434 15.2567 4.82434"
+                    fill="#95A3BD"
+                  ></path>{" "}
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M12.5322 4.82437C11.5839 4.82437 10.7605 4.14854 10.5739 3.21854L10.3714 2.2052C10.3289 2.05104 10.153 1.91687 9.95302 1.91687H6.42552C6.22552 1.91687 6.04968 2.05104 5.99885 2.24354L5.80468 3.21854C5.61885 4.14854 4.79468 4.82437 3.84635 4.82437C3.50135 4.82437 3.22135 4.54437 3.22135 4.19937C3.22135 3.85437 3.50135 3.57437 3.84635 3.57437C4.20135 3.57437 4.50968 3.32104 4.57968 2.9727L4.78218 1.95937C4.98802 1.1827 5.66052 0.66687 6.42552 0.66687H9.95302C10.718 0.66687 11.3905 1.1827 11.588 1.92187L11.7997 2.9727C11.8689 3.32104 12.1772 3.57437 12.5322 3.57437C12.8772 3.57437 13.1572 3.85437 13.1572 4.19937C13.1572 4.54437 12.8772 4.82437 12.5322 4.82437"
+                    fill="#95A3BD"
+                  ></path>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <DeleteCardConfirmModal deleteCard={deleteCard} setDeleteCard={setDeleteCard}/>
+      <DeleteCardConfirmModal
+        deleteCard={deleteCard}
+        setDeleteCard={setDeleteCard}
+      />
     </>
   );
 };
