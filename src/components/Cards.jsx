@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BsPlusLg } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { loadSavedCards } from "../app/features/savedCards";
 import useAuth from "../auth/useAuth";
+import AddNewCardModal from "./AddNewCardModal";
 import CardItem from "./CardItem";
 
 const Cards = () => {
+  const [openAddNew, setOpenAddNew] = useState(false);
   const { fetchData } = useAuth();
   const dispatch = useDispatch();
   const { isLoading, allCards, isError } = useSelector(
@@ -22,6 +24,7 @@ const Cards = () => {
           <button
             type="button"
             className="flex items-center gap-[8px] text-[#3f8cfe] py-[10px] px-[15px] bg-[#ecf4ff] rounded-[8px] text-[15px] leading-6 font-bold font-nunito hover:bg-[#3f8cfe] hover:text-white transition duration-300 ease-in"
+            onClick={()=>setOpenAddNew(true)}
           >
             <BsPlusLg />
             <span>Add new card</span>
@@ -35,6 +38,8 @@ const Cards = () => {
           <CardItem key={card.id} card={card} />
         ))}
       </div>
+
+      <AddNewCardModal openAddNew={openAddNew} setOpenAddNew={setOpenAddNew}/>
     </div>
   );
 };
