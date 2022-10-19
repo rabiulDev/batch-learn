@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import DeleteCardConfirmModal from "./DeleteCardConfirmModal";
 
 const CardItem = ({ card }) => {
+  const [deleteCard, setDeleteCard] = useState(false)   
   const { exp_month, exp_year, brand, last4 } = card.card;
   const cardIcons = [
     {
@@ -190,7 +192,9 @@ const CardItem = ({ card }) => {
     return showIcon;
   };
 
+  
   return (
+    <>
     <div className="mb-5 col-span-12 sm:col-span-6 md:col-span-3 lg:col-span-4">
       <div
         className={`rounded-[12px] h-60 relative border-none ${
@@ -214,8 +218,9 @@ const CardItem = ({ card }) => {
             </div>
           </div>
 
-<h1 className="text-lg card-number-color mt-2">**** **** **** {last4}</h1>
-
+          <h1 className="text-lg card-number-color mt-2">
+            **** **** **** {last4}
+          </h1>
         </div>
         {/* CARD FOOTER  */}
         <div className="card-footer-bg rounded-b-[12px] absolute bottom-0 left-0 w-full px-6 py-4 flex justify-between items-center">
@@ -226,7 +231,7 @@ const CardItem = ({ card }) => {
             </span>
           </p>
           <div>
-            <button className="font-semibold">
+            <button className="font-semibold" onClick={()=>setDeleteCard(card.id)}>
               <svg
                 width="16"
                 height="18"
@@ -258,6 +263,9 @@ const CardItem = ({ card }) => {
         </div>
       </div>
     </div>
+
+    <DeleteCardConfirmModal deleteCard={deleteCard} setDeleteCard={setDeleteCard}/>
+    </>
   );
 };
 
