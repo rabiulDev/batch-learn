@@ -10,23 +10,17 @@ import {
 import React, { useState } from "react";
 import moment from "moment";
 import SessionConfirmModal from "./SessionConfirmModal";
+import {setCreateClassroomData} from "../app/features/createClassRoomData"
+import { useDispatch } from "react-redux";
 const { Option } = Select;
 const { TextArea } = Input;
 
 const SessionModal = ({ openModal, setOpenModal, date }) => {
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [openConfirm, setOpenConfirm] = useState(false);
   const handleFinish = (data) => {
-    const newClassData = {
-      class_date: data.classDate,
-      creator: 28,
-      description: data.description,
-      students: [28],
-      subject: data.subject,
-      title: data.title,
-    };
-
-    console.log(newClassData);
+    dispatch(setCreateClassroomData(data));
     setOpenModal(false);
     setOpenConfirm(true);
     form.resetFields();
