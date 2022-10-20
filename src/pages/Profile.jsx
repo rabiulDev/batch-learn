@@ -1,37 +1,34 @@
 import { Col, Form, Input, Row, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import useAuth from "../auth/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import{loadProfileInfoData} from "../app/features/profileInfo"
 const { Option } = Select;
+
 const Profile = () => {
   const { fetchData } = useAuth();
-  const [profileInfo, setProfileInfo] = useState({});
+  const { profileInfo } = useSelector((state) => state.profileInfo);
+  const dispatch = useDispatch()
+
   useEffect(() => {
+    dispatch(loadProfileInfoData(fetchData))
+  }, []);
+
+  const profileInfoUpdateHandler = (data) => {
+    const updateData = {
+      first_name: data.first_name,
+      last_name: data.last_name,
+      phone_number: data.phone_number,
+    };
     fetchData
-      .get("auth/profile_info/")
-      .then(({ data }) => {
-        setProfileInfo(data);
+      .put("auth/profile_info/", updateData)
+      .then((res) => {
+        dispatch(loadProfileInfoData(fetchData))
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
-
-const profileInfoUpdateHandler = (data) => {
-  const updateData = {
-    first_name: data.first_name,
-    last_name: data.last_name,
-    phone_number: data.phone_number
-  }
-  fetchData
-  .put("auth/profile_info/", updateData)
-  .then(({ data }) => {
-    setProfileInfo(data);
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
-  
-}
+  };
 
   // console.log(profileInfo);
   const prefixPhoneSelector = (

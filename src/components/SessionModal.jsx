@@ -15,12 +15,21 @@ const { TextArea } = Input;
 
 const SessionModal = ({ openModal, setOpenModal, date }) => {
   const [form] = Form.useForm();
-  const [openConfirm, setOpenConfirm] = useState(false)
+  const [openConfirm, setOpenConfirm] = useState(false);
   const handleFinish = (data) => {
-    console.log(data);
+    const newClassData = {
+      class_date: data.classDate,
+      creator: 28,
+      description: data.description,
+      students: [28],
+      subject: data.subject,
+      title: data.title,
+    };
+
+    console.log(newClassData);
     setOpenModal(false);
-    setOpenConfirm(true)
-    form.resetFields()
+    setOpenConfirm(true);
+    form.resetFields();
   };
 
   return (
@@ -98,8 +107,8 @@ const SessionModal = ({ openModal, setOpenModal, date }) => {
                     width: "100%",
                   }}
                 >
-                  <Option value="math">Math</Option>
-                  <Option value="chemistry">Chemistry</Option>
+                  <Option value={1}>Math</Option>
+                  <Option value={2}>Chemistry</Option>
                 </Select>
               </Form.Item>
             </div>
@@ -146,7 +155,10 @@ const SessionModal = ({ openModal, setOpenModal, date }) => {
         </div>
       </Modal>
 
-      <SessionConfirmModal openConfirm={openConfirm} setOpenConfirm={setOpenConfirm}/>
+      <SessionConfirmModal
+        openConfirm={openConfirm}
+        setOpenConfirm={setOpenConfirm}
+      />
     </>
   );
 };
