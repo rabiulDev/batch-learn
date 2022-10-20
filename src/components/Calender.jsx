@@ -9,8 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadClassEventData } from "../app/features/classEvents";
 import { loadProfileInfoData } from "../app/features/profileInfo";
 import useAuth from "../auth/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Calender = () => {
+  const navigate = useNavigate();
   const { fetchData } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [date, setDate] = useState();
@@ -22,19 +24,17 @@ const Calender = () => {
     setDate(event.dateStr);
     setOpenModal(true);
   };
-
   useEffect(() => {
     dispatch(loadClassEventData(fetchData));
     dispatch(loadProfileInfoData(fetchData));
   }, []);
 
-
-  const classEvents = allClasses?.map((data)=>{
-    
-   return {title: data.title, date: data.class_date} 
-  
-  
-  })
+  const handleEventClick = ({ event }) => {
+    navigate(`classroom/${event._def.publicId}`);
+  };
+  const classEvents = allClasses?.map((data) => {
+    return { id: data.id, title: data.title, date: data.class_date };
+  });
   return (
     <>
       {/* DASHBOARD BREADCUMBER  */}
@@ -124,7 +124,9 @@ const Calender = () => {
               list: "List",
             }}
             dateClick={(event) => calendarEventHandler(event)}
-            events = {classEvents}
+            events={classEvents}
+            eventColor="#FFBF00"
+            eventClick={(e) => handleEventClick(e)}
           />
 
           <SessionModal

@@ -2,17 +2,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: false,
-  classroom: [],
+  classroom: {},
   isError: "",
 };
 
 export const loadClassroomData = createAsyncThunk(
-  "classEvent/data",
-  async (fetchData, { rejectWithValue }) => {
+  "classroom/data",
+  async ({ fetchData, URL }, { rejectWithValue }) => {
     try {
-      const response = await fetchData.get(
-        "classrooms/?min_date=2022-09-24%2000:00&max_date=2022-11-05%2023:59&school=&subject="
-      );
+      const response = await fetchData.get(URL);
       if (response.data) {
         return response.data;
       }
@@ -23,7 +21,7 @@ export const loadClassroomData = createAsyncThunk(
 );
 
 export const classEventSlice = createSlice({
-  name: "classEvent",
+  name: "classroom",
   initialState,
   reducers: {},
 
@@ -34,7 +32,7 @@ export const classEventSlice = createSlice({
 
     [loadClassroomData.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.allClasses = action.payload;
+      state.classroom = action.payload;
     },
 
     [loadClassroomData.rejected]: (state, action) => {

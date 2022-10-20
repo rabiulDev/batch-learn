@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Spin } from 'antd';
+import { useDispatch, useSelector } from "react-redux";
+import useAuth from "../auth/useAuth";
+import {loadClassroomData} from "../app/features/classRoom";
+import { useParams } from "react-router-dom";
+import moment from "moment";
 
 const ClassRoom = () => {
+    const {fetchData} = useAuth()   
+ const dispatch = useDispatch();
+ const {id} = useParams()
+ const {isLoading, classroom, isError} = useSelector((state)=> state.classRoom)
+ 
+ const URL = `classrooms/${id}/public-details/`
+
+useEffect(() => {
+    dispatch(loadClassroomData({fetchData, URL}))
+},[])
+
+
+if(isLoading){
+  return <div className="h-[70vh] w-full flex items-center justify-center"> <Spin/> </div>
+}
+else{
   return (
     <div>
       {/* BREADCUMBER   */}
@@ -84,10 +106,10 @@ const ClassRoom = () => {
           {/* CLASS INFO  */}
           <div className="my-10">
             <h3 className="mb-1.5 text-[1.5rem] leading-[2.046rem] font-extrabold font-nunito">
-              Title
+              {classroom?.title}
             </h3>
             <p className="text-base font-nunito font-normal text-gray-500">
-              Description
+              {classroom?.description}
             </p>
 
             <div className="mt-5 flex items-center justify-between gap-6">
@@ -112,7 +134,7 @@ const ClassRoom = () => {
                       </clipPath>
                     </defs>
                   </svg>
-                  <span>School</span>
+                  <span>{classroom?.school}</span>
                 </p>
 
                 <p className="flex items-center gap-1.5 font-normal leading-[1.625] m-0">
@@ -166,7 +188,7 @@ const ClassRoom = () => {
                       fill="#95A3BD"
                     ></path>
                   </svg>
-                  <span>Subject</span>
+                  <span>{classroom?.subject?.name}</span>
                 </p>
                 <p className="flex items-center gap-1.5 font-normal leading-[1.625] m-0">
                   <svg
@@ -189,7 +211,7 @@ const ClassRoom = () => {
                       fill="#95A3BD"
                     ></path>
                   </svg>
-                  <span>Date</span>
+                  <span>{moment(classroom?.class_date).format("YY:MM:DD hh:mm A")}</span>
                 </p>
                 <p className="flex items-center gap-1.5 font-normal leading-[1.625] m-0">
                   <svg
@@ -260,7 +282,7 @@ const ClassRoom = () => {
                       ></path>
                     </g>
                   </svg>
-                  <span>Student Count</span>
+                  <span>{classroom?.student_count} student joined</span>
                 </p>
               </div>
 
@@ -327,6 +349,7 @@ const ClassRoom = () => {
       </div>
     </div>
   );
+}
 };
 
 export default ClassRoom;
