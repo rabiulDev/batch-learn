@@ -3,6 +3,7 @@ import classEventsReducer from "./features/classEvents";
 import historyReducer from "./features/sessionHistory";
 import savedCardsReducer from "./features/savedCards";
 import invoiceHistoryReducer from "./features/invoicesHistory";
+import addNewCardModalReducer from "./features/addNewCardModal";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     sessionHistory: historyReducer,
     savedCards: savedCardsReducer,
     invoiceHistory: invoiceHistoryReducer,
+    addNewCardModal: addNewCardModalReducer,
   },
 });

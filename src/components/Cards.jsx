@@ -5,9 +5,9 @@ import { loadSavedCards } from "../app/features/savedCards";
 import useAuth from "../auth/useAuth";
 import AddNewCardModal from "./AddNewCardModal";
 import CardItem from "./CardItem";
+import {openAddNewCardModal} from "../app/features/addNewCardModal"
 
 const Cards = () => {
-  const [openAddNew, setOpenAddNew] = useState(false);
   const { fetchData } = useAuth();
   const dispatch = useDispatch();
   const { isLoading, allCards, isError } = useSelector(
@@ -24,7 +24,7 @@ const Cards = () => {
           <button
             type="button"
             className="flex items-center gap-[8px] text-[#3f8cfe] py-[10px] px-[15px] bg-[#ecf4ff] rounded-[8px] text-[15px] leading-6 font-bold font-nunito hover:bg-[#3f8cfe] hover:text-white transition duration-300 ease-in"
-            onClick={()=>setOpenAddNew(true)}
+            onClick={()=>dispatch(openAddNewCardModal())}
           >
             <BsPlusLg />
             <span>Add new card</span>
@@ -39,7 +39,7 @@ const Cards = () => {
         ))}
       </div>
 
-      <AddNewCardModal openAddNew={openAddNew} setOpenAddNew={setOpenAddNew}/>
+      <AddNewCardModal/>
     </div>
   );
 };

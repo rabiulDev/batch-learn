@@ -1,13 +1,17 @@
-import { Button, Modal } from "antd";
-import React, { useState } from "react";
-import PaymentForm from "./PaymentForm";
+import {Modal} from "antd";
+import React from "react";
 import StripeContainer from "./StripeContainer";
+import { useSelector, useDispatch } from 'react-redux'
+import {closeAddNewCardModal} from "../app/features/addNewCardModal"
 
-const AddNewCardModal = ({ openAddNew, setOpenAddNew }) => {
+const AddNewCardModal = () => {
+const dispatch = useDispatch();
+const {openModal} = useSelector((state)=> state.addNewCardModal)
+
   return (
     <Modal
-      open={openAddNew}
-      onCancel={() => setOpenAddNew(false)}
+      open={openModal}
+      onCancel={() => dispatch(closeAddNewCardModal())}
       footer={null}
     >
       <div className="mb-4 font-nunito">
@@ -15,7 +19,7 @@ const AddNewCardModal = ({ openAddNew, setOpenAddNew }) => {
           Add Payment Method
         </h3>
       </div>
-      <StripeContainer setOpenAddNew={setOpenAddNew} />
+      <StripeContainer />
     </Modal>
   );
 };

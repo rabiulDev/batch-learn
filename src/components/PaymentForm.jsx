@@ -2,9 +2,12 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { Button } from "antd";
 import React, { useState } from "react";
 import useAuth from "../auth/useAuth";
-import { useDispatch } from "react-redux";
 import { loadSavedCards } from "../app/features/savedCards";
 import { toast } from "react-toastify";
+import {useDispatch } from 'react-redux'
+import {closeAddNewCardModal} from "../app/features/addNewCardModal"
+
+
 
 const CARD_OPTIONS = {
   iconStyle: "solid",
@@ -26,7 +29,7 @@ const CARD_OPTIONS = {
   },
 };
 
-const PaymentForm = ({ setOpenAddNew }) => {
+const PaymentForm = () => {
   const { fetchData } = useAuth();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -47,7 +50,7 @@ const PaymentForm = ({ setOpenAddNew }) => {
       .post("billing/payment-methods/", { stripe_token: token.id })
       .then((response) => {
         setLoading(false);
-        setOpenAddNew(false);
+        dispatch(closeAddNewCardModal());
         toast.success("Payment method added successfully!", {
           position: "bottom-right",
           autoClose: 5000,
@@ -62,7 +65,7 @@ const PaymentForm = ({ setOpenAddNew }) => {
       })
       .catch(() => {
         setLoading(false);
-        setOpenAddNew(false);
+        dispatch(closeAddNewCardModal());
         toast.error("Something is wrong", {
           position: "bottom-right",
           autoClose: 5000,
