@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../auth/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import{loadProfileInfoData} from "../app/features/profileInfo"
+import { toast } from "react-toastify";
 const { Option } = Select;
 
 const Profile = () => {
   const { fetchData } = useAuth();
-  const { profileInfo } = useSelector((state) => state.profileInfo);
+  const { isLoading, profileInfo } = useSelector((state) => state.profileInfo);
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -24,9 +25,29 @@ const Profile = () => {
       .put("auth/profile_info/", updateData)
       .then((res) => {
         dispatch(loadProfileInfoData(fetchData))
+        toast.success("Profile has been updated successfully!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       })
       .catch((err) => {
         console.log(err.message);
+        toast.error("Something wrong", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       });
   };
 
