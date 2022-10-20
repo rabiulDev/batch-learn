@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Calender from "../components/Calender";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Billings from "../pages/Billings";
+import ClassRoom from "../pages/ClassRoom";
 import ForgotPassword from "../pages/ForgotPassword";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -22,6 +23,7 @@ const Router = () => {
         }
       >
         <Route index element={<Calender />} />
+        <Route path="classroom/:id" element={<ClassRoom/>} />
         <Route path="session-history" element={<SessionHistory />} />
         <Route path="profile" element={<Profile />} />
         <Route path="billings" element={<Billings />} />
