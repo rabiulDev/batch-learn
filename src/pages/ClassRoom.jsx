@@ -10,6 +10,7 @@ import TeacherAttachments from "../components/TeacherAttachments";
 import StudentAttachments from "../components/StudentAttachments";
 import ClassroomComment from "../components/ClassroomComment";
 import ClassroomMembers from "../components/ClassroomMembers";
+import ClassroomCountdown from "../components/ClassroomCountdown";
 
 const ClassRoom = () => {
   const { fetchData } = useAuth();
@@ -110,7 +111,7 @@ const ClassRoom = () => {
           {/* CLASSROOM LEFT SIDE  */}
           <div className="col-span-8">
             <div className="w-full h-72 bg-[#ecf4ff] rounded-[10px] flex flex-col items-center justify-center gap-5">
-              Join Now
+              <ClassroomCountdown/>
             </div>
 
             {/* CLASS INFO  */}
