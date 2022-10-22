@@ -19,9 +19,8 @@ const JoinClassroomConfirmModal = ({ openConfirm, setOpenConfirm }) => {
         classroom_id: openConfirm,
       })
       .then((res) => {
-        console.log(res.data);
         dispatch(loadClassroomData({ fetchData, URL }));
-        toast.success("You join the classroom successfully!", {
+        toast.success(res.data?.message, {
           position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
