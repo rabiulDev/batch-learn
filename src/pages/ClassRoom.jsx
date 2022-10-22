@@ -6,6 +6,10 @@ import { loadClassroomData } from "../app/features/classRoom";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import NoAccess from "../components/NoAccess";
+import TeacherAttachments from "../components/TeacherAttachments";
+import StudentAttachments from "../components/StudentAttachments";
+import ClassroomComment from "../components/ClassroomComment";
+import ClassroomMembers from "../components/ClassroomMembers";
 
 const ClassRoom = () => {
   const { fetchData } = useAuth();
@@ -30,7 +34,7 @@ const ClassRoom = () => {
     );
   } else {
     return (
-      <div>
+      <div className="scroolbar pb-7 h-full">
         {/* BREADCUMBER   */}
         <div className="mb-9 flex items-center gap-2.5">
           <span>
@@ -351,23 +355,39 @@ const ClassRoom = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-12 gap-5 h-[70vh] pb-8">
-              <div className="col-span-12 md:col-span-7 max-h-[480px] h-full">
-               
-               <NoAccess text="You don't have access to this classroom comments"/>
-
+            <div className="grid grid-cols-12 gap-5">
+              <div className="col-span-12 md:col-span-7 min-h-[480px]">
+                {classroom.lock ? (
+                  <NoAccess text="You don't have access to this classroom comments" />
+                ) : (
+                  <ClassroomComment />
+                )}
               </div>
 
-              <div className="col-span-12 md:col-span-5  max-h-[480px] h-full">
-              <NoAccess text="You don't have access to this classroom members list"/>
+              <div className="col-span-12 md:col-span-5 min-h-[480px]">
+                {classroom.lock ? (
+                  <NoAccess text="You don't have access to this classroom members list" />
+                ) : (
+                  <ClassroomMembers />
+                )}
               </div>
             </div>
           </div>
 
           {/* CLASSROOM RIGHT SIDE  */}
           <div className="col-span-4">
+            {/* TEACHER ATTACHMENTS  */}
+
             <div className="mb-2.5 h-full max-h-[430px] ">
-              <NoAccess text="You don't have access to this classroom teacher attachments" />
+              {classroom.lock ? (
+                <NoAccess text="You don't have access to this classroom teacher attachments" />
+              ) : (
+                <TeacherAttachments />
+              )}
+            </div>
+            {/* STUDENT ATTACHMENTS  */}
+            <div className="mb-2.5 h-full max-h-[430px] ">
+              <StudentAttachments />
             </div>
           </div>
         </div>

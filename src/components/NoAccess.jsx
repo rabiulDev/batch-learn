@@ -2,7 +2,7 @@ import React from "react";
 
 const NoAccess = ({text}) => {
   return (
-    <div className="h-full w-full flex items-center justify-center flex-col bg-white px-5 rounded-[8px] border border-gray-200 min-h-[96px]">
+    <div className="h-full flex items-center justify-center flex-col bg-white px-5 rounded-[8px] border border-gray-200 min-h-[96px]">
       <div>
         <span>
           <svg
