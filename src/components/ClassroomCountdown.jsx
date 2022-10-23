@@ -15,37 +15,41 @@ const ClassroomCountdown = () => {
           <h3 className="text-red-400 text-center text-[1.5rem] leading-[2.046rem] font-nunito font-extrabold">
             Class Expired
           </h3>
-          {classroom.lock && (
-            <button
-              onClick={() => setOpenConfirm(classroom.classroom_id)}
-              className="py-[15px] px-6 bg-blue-400 rounded-[0.625rem] text-base text-white font-bold font-nunito hover:bg-blue-500 transition duration-300"
-            >
-              Join Classroom
-            </button>
-          )}
         </div>
       );
     } else {
       // Render a countdown
       return (
-        <div className="flex items-center justify-center gap-8 text-blue-400 ">
-          <div className="text-4xl font-nunito font-bold flex flex-col gap-1.5 items-center">
-            <span>{days}</span>
-            <span className="text-[1.5rem] leading-[2.046rem]">Day</span>
+        <>
+          <div className="flex items-center justify-center gap-8 text-blue-400 ">
+            <div className="text-4xl font-nunito font-bold flex flex-col gap-1.5 items-center">
+              <span>{days}</span>
+              <span className="text-[1.5rem] leading-[2.046rem]">Day</span>
+            </div>
+            <div className="text-4xl font-nunito font-bold flex flex-col gap-1.5 items-center">
+              <span>{zeroPad(hours)}</span>
+              <span className="text-[1.5rem] leading-[2.046rem]">Hours</span>
+            </div>
+            <div className="text-4xl font-nunito font-bold flex flex-col gap-1.5 items-center">
+              <span>{zeroPad(minutes)}</span>
+              <span className="text-[1.5rem] leading-[2.046rem]">Min</span>
+            </div>
+            <div className="text-4xl font-nunito font-bold flex flex-col gap-1.5 items-center">
+              <span>{zeroPad(seconds)}</span>
+              <span className="text-[1.5rem] leading-[2.046rem]">Sec</span>
+            </div>
           </div>
-          <div className="text-4xl font-nunito font-bold flex flex-col gap-1.5 items-center">
-            <span>{zeroPad(hours)}</span>
-            <span className="text-[1.5rem] leading-[2.046rem]">Hours</span>
+          <div className="flex items-center justify-center mt-6">
+            {classroom.lock && (
+              <button
+                onClick={() => setOpenConfirm(classroom.classroom_id)}
+                className="py-[15px] px-6 bg-blue-400 rounded-[0.625rem] text-base text-white font-bold font-nunito hover:bg-blue-500 transition duration-300"
+              >
+                Join Classroom
+              </button>
+            )}
           </div>
-          <div className="text-4xl font-nunito font-bold flex flex-col gap-1.5 items-center">
-            <span>{zeroPad(minutes)}</span>
-            <span className="text-[1.5rem] leading-[2.046rem]">Min</span>
-          </div>
-          <div className="text-4xl font-nunito font-bold flex flex-col gap-1.5 items-center">
-            <span>{zeroPad(seconds)}</span>
-            <span className="text-[1.5rem] leading-[2.046rem]">Sec</span>
-          </div>
-        </div>
+        </>
       );
     }
   };
