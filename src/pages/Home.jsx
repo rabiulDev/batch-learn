@@ -1,12 +1,16 @@
 import { Dropdown,  Layout, Menu, } from "antd";
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import profile from "../assets/images/profile.png";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import ChangePasswordModal from "../components/ChangePasswordModal";
+import { useDispatch } from "react-redux";
+import {loadAccountData} from "../app/features/account"
+import useAuth from "../auth/useAuth";
 const { Header, Content, Sider } = Layout;
 
 const Home = () => {
+  const {fetchData} = useAuth()
+  const dispatch = useDispatch()
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -175,6 +179,14 @@ const Home = () => {
       ]}
     />
   );
+
+ useEffect(()=>{
+  dispatch(loadAccountData(fetchData))
+ },[])
+
+
+
+
   return (
     <Layout className=" bg-white">
       <Header className="header__wrapper !pl-6 !pr-9">

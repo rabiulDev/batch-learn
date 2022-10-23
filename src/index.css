@@ -387,20 +387,45 @@ a {
   background: #fdfdfd;
 }
 
-
+.comment__input {
+  margin: 0px !important;
+}
 .comment__input input {
   padding: 13px 16px !important;
   border-radius: 40px !important;
   height: 46px !important;
   background-color: #f9fbfc !important;
   border: 1px solid #f2f3f7 !important;
-  width: 100%;
+  width: 100% !important;
   color: #042040;
   font-weight: 400;
-  
 }
-
-
+.comment__input {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-top: 12px !important;
+}
+.comment__input .ant-row {
+  display: block !important;
+  flex-grow: 1 !important;
+}
+.comment__input input {
+  flex-grow: 1 !important;
+}
 .list__item:nth-child(odd) {
   background: #fbfcfe;
+}
+
+.ant-comment {
+  border: 1px solid #f1f1f1;
+  border-radius: 6px;
+  margin-right: 10px;
+  margin-top: 10px;
+  padding: 10px !important;
+}
+
+.ant-comment-inner {
+  padding: 0px !important;
 }

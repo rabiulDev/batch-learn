@@ -15,7 +15,7 @@ const ClassroomMembers = () => {
         setAllMembers(data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
   return (
