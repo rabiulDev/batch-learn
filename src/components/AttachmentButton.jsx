@@ -1,9 +1,9 @@
 import React from "react";
 
-const AttachmentButton = () => {
+const AttachmentButton = ({action}) => {
   return (
     <div>
-      <button className=" attachbtn-hover flex items-center gap-[5px] py-[10px] px-[15px] text-[15px] text-[#3f8cfe] leading-[25px] font-bold font-nunito hover:text-gray-400">
+      <button onClick={()=>action(true)} className=" attachbtn-hover flex items-center gap-[5px] py-[10px] px-[15px] text-[15px] text-[#3f8cfe] leading-[25px] font-bold font-nunito hover:text-gray-400">
         <svg
        
           fill="none"

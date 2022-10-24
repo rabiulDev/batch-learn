@@ -429,3 +429,13 @@ a {
 .ant-comment-inner {
   padding: 0px !important;
 }
+
+
+.ant-upload.ant-upload-drag {
+  background: transparent !important;
+  border: none !important;
+}
+
+.ant-upload.ant-upload-select {
+  display: block !important;
+}

@@ -1,18 +1,20 @@
-import { Col, Form, Input, Row, Select } from "antd";
+import { Col, Form, Input, Row, Select, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import useAuth from "../auth/useAuth";
 import { useDispatch, useSelector } from "react-redux";
-import{loadProfileInfoData} from "../app/features/profileInfo"
+import { loadProfileInfoData } from "../app/features/profileInfo";
 import { toast } from "react-toastify";
+import ProfileUploadModal from "../components/ProfileUploadModal";
 const { Option } = Select;
 
 const Profile = () => {
+  const [openModal, setOpenModal] = useState(false)
   const { fetchData } = useAuth();
-  const { isLoading, profileInfo } = useSelector((state) => state.profileInfo);
-  const dispatch = useDispatch()
+  const { profileInfo } = useSelector((state) => state.profileInfo);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadProfileInfoData(fetchData))
+    dispatch(loadProfileInfoData(fetchData));
   }, []);
 
   const profileInfoUpdateHandler = (data) => {
@@ -24,7 +26,7 @@ const Profile = () => {
     fetchData
       .put("auth/profile_info/", updateData)
       .then((res) => {
-        dispatch(loadProfileInfoData(fetchData))
+        dispatch(loadProfileInfoData(fetchData));
         toast.success("Profile has been updated successfully!", {
           position: "bottom-right",
           autoClose: 5000,
@@ -147,7 +149,7 @@ const Profile = () => {
 
         {/* PROFILE IMAGE AND NAME  */}
         <div className="flex items-center flex-wrap gap-8 mb-10">
-          <div className="w-[9.25rem] h-[9.255rem] rounded-full overflow-hidden bg-blue-500 cursor-pointer group relative">
+          <div onClick={()=>{setOpenModal(true)}} className="w-[9.25rem] h-[9.255rem] rounded-full overflow-hidden bg-blue-500 cursor-pointer group relative">
             {profileInfo.avatar ? (
               <img src={profileInfo?.avatar} />
             ) : (
@@ -296,10 +298,16 @@ const Profile = () => {
             </Col>
           </Row>
         </Form>
+
+        <ProfileUploadModal open={openModal} close={setOpenModal}/> 
       </div>
     );
   } else {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-[70vh] w-full flex items-center justify-center">
+             <Spin />
+      </div>
+    );
   }
 };
 
