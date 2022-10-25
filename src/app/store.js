@@ -9,19 +9,30 @@ import createClassroomDataReducer from "./features/createClassRoomData";
 import classRoomReducer from "../app/features/classRoom"
 import accoutReducer from "../app/features/account"
 import commentsReducer from "../app/features/comments"
+import schoolsReducer from "../app/features/getSchools"
+import teacherTypesReducer from "../app/features/getTeacherTypes"
+import subjectsReducer from "../app/features/getSubjects"
+import classToolsReducer from "../app/features/getClassesTools"
+import teacherRegistrationDataReducer from "../app/features/teacherRegisterData"
+
 
 export const store = configureStore({
   reducer: {
     accout: accoutReducer,
     classEvents: classEventsReducer,
     classRoom: classRoomReducer,
+    classTools: classToolsReducer,
     profileInfo: profileInfoReducer,
     createClassroomData: createClassroomDataReducer,
     comments: commentsReducer,
     sessionHistory: historyReducer,
     savedCards: savedCardsReducer,
+    schools: schoolsReducer,
+    subjects: subjectsReducer,
     invoiceHistory: invoiceHistoryReducer,
     addNewCardModal: addNewCardModalReducer,
+    teacherTypes: teacherTypesReducer,
+    teacherRegistrationData: teacherRegistrationDataReducer
   },
 
   // Disable the non-serializable value checking

@@ -10,6 +10,7 @@ import Login from "../pages/Login";
 import Profile from "../pages/Profile";
 import SessionHistory from "../pages/SessionHistory";
 import StudentRegister from "../pages/StudentRegister";
+import TeacherRegister from "../pages/TeacherRegister";
 
 const Router = () => {
   return (
@@ -30,6 +31,7 @@ const Router = () => {
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register-student" element={<StudentRegister />} />
+      <Route path="/register-teacher" element={<TeacherRegister/>}/>
       <Route path="/auth/forgot-password" element={<ForgotPassword />} />
     </Routes>
   );

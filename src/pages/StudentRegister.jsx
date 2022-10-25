@@ -59,6 +59,7 @@ const StudentRegister = () => {
             layout="vertical"
             requiredMark="optional"
             name="login"
+            autoComplete="off"
             className="login-form"
             initialValues={{
               remember: true,
@@ -67,7 +68,7 @@ const StudentRegister = () => {
             <div className="sm:flex sm:gap-6 w-full">
               <div className=" sm:w-1/2">
                 <Form.Item
-                  className="global__input"
+                  className="login__input"
                   name="first_name"
                   label="First Name:"
                   rules={[
@@ -77,12 +78,39 @@ const StudentRegister = () => {
                     },
                   ]}
                 >
-                  <Input size="large" placeholder="Ex. Jhonny" />
+                  <Input prefix={
+                  <svg
+                    fill="none"
+                    height="20"
+                    viewBox="0 0 16 20"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M7.987 13.0674C4.44168 13.0674 1.41406 13.6034 1.41406 15.7502C1.41406 17.8969 4.42247 18.4521 7.987 18.4521C11.5323 18.4521 14.5591 17.9152 14.5591 15.7694C14.5591 13.6235 11.5515 13.0674 7.987 13.0674Z"
+                      fillRule="evenodd"
+                      stroke="#95A3BD"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.2"
+                    ></path>
+                    <path
+                      clipRule="evenodd"
+                      d="M7.98664 10.0056C10.3132 10.0056 12.1989 8.11897 12.1989 5.79238C12.1989 3.46579 10.3132 1.58008 7.98664 1.58008C5.66005 1.58008 3.77346 3.46579 3.77346 5.79238C3.7656 8.11111 5.6391 9.9977 7.95695 10.0056H7.98664Z"
+                      fillRule="evenodd"
+                      stroke="#95A3BD"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.2"
+                    ></path>
+                  </svg>
+                } size="large" placeholder="Ex. Jhonny" />
                 </Form.Item>
               </div>
               <div className=" sm:w-1/2">
                 <Form.Item
-                  className="global__input"
+                  className="login__input"
                   name="last_name"
                   label="Last Name:"
                   rules={[
@@ -92,7 +120,34 @@ const StudentRegister = () => {
                     },
                   ]}
                 >
-                  <Input size="large" placeholder="Ex. Doe" />
+                  <Input prefix={
+                  <svg
+                    fill="none"
+                    height="20"
+                    viewBox="0 0 16 20"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      clipRule="evenodd"
+                      d="M7.987 13.0674C4.44168 13.0674 1.41406 13.6034 1.41406 15.7502C1.41406 17.8969 4.42247 18.4521 7.987 18.4521C11.5323 18.4521 14.5591 17.9152 14.5591 15.7694C14.5591 13.6235 11.5515 13.0674 7.987 13.0674Z"
+                      fillRule="evenodd"
+                      stroke="#95A3BD"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.2"
+                    ></path>
+                    <path
+                      clipRule="evenodd"
+                      d="M7.98664 10.0056C10.3132 10.0056 12.1989 8.11897 12.1989 5.79238C12.1989 3.46579 10.3132 1.58008 7.98664 1.58008C5.66005 1.58008 3.77346 3.46579 3.77346 5.79238C3.7656 8.11111 5.6391 9.9977 7.95695 10.0056H7.98664Z"
+                      fillRule="evenodd"
+                      stroke="#95A3BD"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.2"
+                    ></path>
+                  </svg>
+                } size="large" placeholder="Ex. Doe" />
                 </Form.Item>
               </div>
             </div>
@@ -100,7 +155,7 @@ const StudentRegister = () => {
             <div className="sm:flex sm:gap-6 w-full">
               <div className=" sm:w-1/2">
                 <Form.Item
-                  className="global__input"
+                  className="login__input"
                   name="email"
                   label="Email:"
                   rules={[
@@ -114,7 +169,34 @@ const StudentRegister = () => {
                     },
                   ]}
                 >
-                  <Input size="large" placeholder="john@example.com" />
+                  <Input prefix={
+                  <svg
+                    fill="none"
+                    height="18"
+                    viewBox="0 0 20 18"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                     
+                      d="M15.4107 6.11353L11.3377 9.42548C10.5681 10.036 9.48544 10.036 8.71591 9.42548L4.60852 6.11353"
+                      stroke="#95A3BD"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.2"
+                    ></path>
+                    <path
+                     
+                      clipRule="evenodd"
+                      d="M14.4998 17.25C17.2877 17.2577 19.1666 14.9671 19.1666 12.1518V5.85584C19.1666 3.04059 17.2877 0.75 14.4998 0.75H5.50019C2.71228 0.75 0.833313 3.04059 0.833313 5.85584V12.1518C0.833313 14.9671 2.71228 17.2577 5.50019 17.25H14.4998Z"
+                      fillRule="evenodd"
+                      stroke="#95A3BD"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.2"
+                    ></path>
+                  </svg>
+                } size="large" placeholder="john@example.com" />
                 </Form.Item>
               </div>
               <div className="sm:w-1/2">
