@@ -5,6 +5,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: false,
   account: {},
+  role: "",
   isError: "",
 };
 
@@ -32,9 +33,10 @@ export const accountSlice = createSlice({
       state.isLoading = true;
     },
 
-    [loadAccountData.fulfilled]: (state, action) => {
+    [loadAccountData.fulfilled]: (state, {payload}) => {
+      state.account = payload;
+      state.role = payload?.groups[0];
       state.isLoading = false;
-      state.account = action.payload;
     },
 
     [loadAccountData.rejected]: (state, action) => {

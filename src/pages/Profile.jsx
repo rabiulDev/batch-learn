@@ -1,4 +1,4 @@
-import { Col, Form, Input, Row, Select, Spin } from "antd";
+import { Button, Col, Form, Input, Row, Select, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import useAuth from "../auth/useAuth";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,9 +8,13 @@ import ProfileUploadModal from "../components/ProfileUploadModal";
 const { Option } = Select;
 
 const Profile = () => {
-  const [openModal, setOpenModal] = useState(false)
+  const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { fetchData } = useAuth();
   const { profileInfo } = useSelector((state) => state.profileInfo);
+  const { subjects } = useSelector((state) => state.subjects);
+  const { classTools } = useSelector((state) => state.classTools);
+  const { role } = useSelector((state) => state.accout);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,7 +26,11 @@ const Profile = () => {
       first_name: data.first_name,
       last_name: data.last_name,
       phone_number: data.phone_number,
+      subjects: data.subjects,
+      classes_tools: data.classes_tools,
     };
+
+    setLoading(true)
     fetchData
       .put("auth/profile_info/", updateData)
       .then((res) => {
@@ -37,6 +45,7 @@ const Profile = () => {
           progress: undefined,
           theme: "dark",
         });
+        setLoading(false)
       })
       .catch((err) => {
         console.log(err.message);
@@ -50,6 +59,7 @@ const Profile = () => {
           progress: undefined,
           theme: "dark",
         });
+        setLoading(false)
       });
   };
 
@@ -149,7 +159,12 @@ const Profile = () => {
 
         {/* PROFILE IMAGE AND NAME  */}
         <div className="flex items-center flex-wrap gap-8 mb-10">
-          <div onClick={()=>{setOpenModal(true)}} className="w-[9.25rem] h-[9.255rem] rounded-full overflow-hidden bg-blue-500 cursor-pointer group relative">
+          <div
+            onClick={() => {
+              setOpenModal(true);
+            }}
+            className="w-[9.25rem] h-[9.255rem] rounded-full overflow-hidden bg-blue-500 cursor-pointer group relative"
+          >
             {profileInfo.avatar ? (
               <img src={profileInfo?.avatar} />
             ) : (
@@ -205,6 +220,8 @@ const Profile = () => {
             first_name: profileInfo?.first_name,
             last_name: profileInfo?.last_name,
             phone_number: profileInfo?.phone_number,
+            subjects: profileInfo?.subjects.map((item) => item.id),
+            classes_tools: profileInfo?.classes_tools.map((item) => item.id),
             remember: true,
           }}
         >
@@ -214,12 +231,20 @@ const Profile = () => {
               Personal informations
             </h2>
             <div className="max-w-[124px] w-full">
-              <button
+              { loading ? <Button
+                className="!flex !items-center !justify-center !py-[15px] !h-[46px] !font-nunito !font-bold !text-base !rounded-[10px]"
+                disabled
+                loading
+                size="large"
+                block
+              >
+                Processing
+              </Button> : <button
                 type="submit"
                 className="w-full py-[15px] px-[20px] bg-blue-500 h-[46px] leading-[18px] rounded-[10px] text-base text-white font-bold font-nunito transition duration-300 hover:bg-blue-600"
               >
                 Save
-              </button>
+              </button>}
             </div>
           </div>
 
@@ -296,16 +321,66 @@ const Profile = () => {
                 />
               </Form.Item>
             </Col>
+            {role === "Teacher" && (
+              <Col span={8}>
+                <Form.Item
+                  className="global__input"
+                  name="subjects"
+                  label="Subject:"
+                  rules={[
+                    {
+                      required: true,
+                      message: "The Phone field is required",
+                    },
+                  ]}
+                >
+                  <Select mode="multiple" optionLabelProp="label">
+                    {subjects?.map((item) => (
+                      <Option key={item.id} value={item.id} label={item.name}>
+                        <div className="demo-option-label-item">
+                          {item.name}
+                        </div>
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            )}
+            {role === "Teacher" && (
+              <Col span={8}>
+                <Form.Item
+                  className="global__input"
+                  name="classes_tools"
+                  label="Class Tools:"
+                  rules={[
+                    {
+                      required: true,
+                      message: "The Phone field is required",
+                    },
+                  ]}
+                >
+                  <Select mode="multiple" optionLabelProp="label">
+                    {classTools?.map((item) => (
+                      <Option key={item.id} value={item.id} label={item.name}>
+                        <div className="demo-option-label-item">
+                          {item.name}
+                        </div>
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            )}
           </Row>
         </Form>
 
-        <ProfileUploadModal open={openModal} close={setOpenModal}/> 
+        <ProfileUploadModal open={openModal} close={setOpenModal} />
       </div>
     );
   } else {
     return (
       <div className="h-[70vh] w-full flex items-center justify-center">
-             <Spin />
+        <Spin />
       </div>
     );
   }

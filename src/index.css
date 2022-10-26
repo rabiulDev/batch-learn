@@ -451,3 +451,12 @@ a {
 .ant-upload.ant-upload-select {
   display: block !important;
 }
+
+.fc-media-screen.fc-theme-standard{
+  height: 100% !important;
+}
+
+.ant-select-selection-search > input{
+  background: transparent !important;
+  border: none !important;
+}

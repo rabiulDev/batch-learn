@@ -10,9 +10,7 @@ export const loadClassEventData = createAsyncThunk(
   "classEvent/data",
   async (fetchData, { rejectWithValue }) => {
     try {
-      const response = await fetchData.get(
-        "classrooms/?min_date=2022-09-24%2000:00&max_date=2022-11-05%2023:59&school=&subject="
-      );
+      const response = await fetchData.get("classrooms/?min_date=2022-09-24%2000:00&max_date=2022-11-05%2023:59&school=&subject=");
       if (response.data) {
         return response.data;
       }

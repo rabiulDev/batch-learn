@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Divider, Form, Input, Modal } from "antd";
+import { Button, Divider, Form, Input } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
@@ -12,7 +12,8 @@ const Login = () => {
   const [errMessage, setErrMessage] = useState(null);
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const {saveToken} = useAuth()
+  const { saveToken } = useAuth();
+
   const onFinish = async (data) => {
     const loginData = {
       email: data.email,
@@ -29,12 +30,9 @@ const Login = () => {
       if (response.data) {
         setLoading(false);
         setErrMessage(null);
-       saveToken(response.data.access)
-        
+        saveToken(response.data.access);
         navigate("/");
       }
-
-      // console.log(response.data);
     } catch (err) {
       setLoading(false);
       setErrMessage(err.message);
@@ -201,7 +199,7 @@ const Login = () => {
 
             {/* Registration Modal  */}
 
-            <RegisterModal open={open} setOpen={setOpen}/>
+            <RegisterModal open={open} setOpen={setOpen} />
 
             <div
               onClick={() => setOpen(true)}
