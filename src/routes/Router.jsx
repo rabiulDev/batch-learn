@@ -7,6 +7,7 @@ import ClassRoom from "../pages/ClassRoom";
 import ForgotPassword from "../pages/ForgotPassword";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import Payouts from "../pages/Payouts";
 import Profile from "../pages/Profile";
 import SessionHistory from "../pages/SessionHistory";
 import StudentRegister from "../pages/StudentRegister";
@@ -28,6 +29,7 @@ const Router = () => {
         <Route path="session-history" element={<SessionHistory />} />
         <Route path="profile" element={<Profile />} />
         <Route path="billings" element={<Billings />} />
+        <Route path="payouts" element={<Payouts />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register-student" element={<StudentRegister />} />

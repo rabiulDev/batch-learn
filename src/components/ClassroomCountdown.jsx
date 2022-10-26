@@ -6,6 +6,7 @@ import JoinClassroomConfirmModal from "./JoinClassroomConfirmModal";
 const ClassroomCountdown = () => {
   const [openConfirm, setOpenConfirm] = useState();
   const { classroom } = useSelector((state) => state.classRoom);
+  const { role } = useSelector((state) => state.accout);
 
   const countDownRenderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -39,16 +40,29 @@ const ClassroomCountdown = () => {
               <span className="text-[1.5rem] leading-[2.046rem]">Sec</span>
             </div>
           </div>
-          <div className="flex items-center justify-center mt-6">
-            {classroom.lock && (
-              <button
-                onClick={() => setOpenConfirm(classroom.classroom_id)}
-                className="py-[15px] px-6 bg-blue-400 rounded-[0.625rem] text-base text-white font-bold font-nunito hover:bg-blue-500 transition duration-300"
-              >
-                Join Classroom
-              </button>
-            )}
-          </div>
+          {role === "Student" ? (
+            <div className="flex items-center justify-center mt-6">
+              {classroom.lock && (
+                <button
+                  onClick={() => setOpenConfirm(classroom.classroom_id)}
+                  className="py-[15px] px-6 bg-blue-400 rounded-[0.625rem] text-base text-white font-bold font-nunito hover:bg-blue-500 transition duration-300"
+                >
+                  Join Classroom
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center mt-6">
+              {classroom.teacher === null && (
+                <button
+                  onClick={() => setOpenConfirm(classroom.classroom_id)}
+                  className="py-[15px] px-14 bg-blue-500 rounded-[0.625rem] text-base text-white font-bold font-nunito hover:bg-blue-500 transition duration-300"
+                >
+                  Accept
+                </button>
+              )}
+            </div>
+          )}
         </>
       );
     }

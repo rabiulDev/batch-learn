@@ -1,11 +1,15 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+import AttachmentButton from './AttachmentButton';
 
 const TeacherAttachments = () => {
+  const { role } = useSelector((state) => state.accout);
   return (
     <div className="mb-2.5 relative max-h-[430px] h-full">
       <div className='relative bg-white rounded-[8px] border border-gray-200'>
         <div className='flex items-center justify-between px-[1rem] py-3'>
             <div className="text-[15px] leading-[25px] text-black py-[0.875rem] font-bold font-nunito"> Teacher Attachments </div>
+        {role === "Teacher" && <AttachmentButton/>}
         </div>
         <ul className='overflow-y-scroll h-80 overflow-x-hidden'>
           

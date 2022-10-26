@@ -460,3 +460,19 @@ a {
   background: transparent !important;
   border: none !important;
 }
+
+.payouts-shadow {
+  --tw-shadow: 0px 0px 40px 8px rgb(238, 238, 238, .40) !important;
+  --tw-shadow-colored: 0px 0px 40px 8px var(--tw-shadow-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+}
+
+.pending {
+  background: rgba(255,215,118,.5)!important;
+}
+.available {
+  background: rgba(82,193,106,.4)!important;
+}
+.withdraw {
+  background: rgba(63,140,254,.4)!important;
+}

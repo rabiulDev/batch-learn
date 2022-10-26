@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import AttachmentButton from "./AttachmentButton";
 import StudentAttachFileModal from "./StudentAttachFileModal";
 
 const StudentAttachments = () => {
   const [openModal, setOpenModal] = useState(false)
+  const { role } = useSelector((state) => state.accout);
   return (
     <>
       <div className="mb-2.5 relative max-h-[430px] h-full">
@@ -13,7 +15,7 @@ const StudentAttachments = () => {
               {" "}
               Student Attachments{" "}
             </div>
-            <AttachmentButton action={setOpenModal} />   
+           {role === "Student" &&  <AttachmentButton action={setOpenModal} /> }  
           </div>
           <ul className="overflow-y-scroll h-80 overflow-x-hidden">
             <p className="text-center text-[#7D8DA6] text-base font-nunito font-semibold h-full flex items-center justify-center">

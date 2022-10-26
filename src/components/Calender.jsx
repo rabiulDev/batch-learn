@@ -7,7 +7,6 @@ import interactionPlugin from "@fullcalendar/interaction";
 import SessionModal from "./SessionModal";
 import { useDispatch, useSelector } from "react-redux";
 import { loadClassEventData } from "../app/features/classEvents";
-import { loadProfileInfoData } from "../app/features/profileInfo";
 import useAuth from "../auth/useAuth";
 import { useNavigate } from "react-router-dom";
 import { Checkbox, Spin } from "antd";
@@ -30,7 +29,6 @@ const Calender = () => {
   };
   useEffect(() => {
    dispatch(loadClassEventData(fetchData));
-   dispatch(loadProfileInfoData(fetchData));
   }, []);
 
   const handleEventClick = ({ event }) => {

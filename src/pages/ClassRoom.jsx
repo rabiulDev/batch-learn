@@ -16,9 +16,12 @@ const ClassRoom = () => {
   const { fetchData } = useAuth();
   const dispatch = useDispatch();
   const { id } = useParams();
+  const { role } = useSelector((state) => state.accout);
   const { isLoading, classroom, isError } = useSelector(
     (state) => state.classRoom
   );
+
+  //classrooms/35/public-details/
 
   const URL = `classrooms/${id}/public-details/`;
 
@@ -111,7 +114,7 @@ const ClassRoom = () => {
           {/* CLASSROOM LEFT SIDE  */}
           <div className="col-span-8">
             <div className="w-full h-72 bg-[#ecf4ff] rounded-[10px] flex flex-col items-center justify-center gap-5">
-              <ClassroomCountdown/>
+              <ClassroomCountdown />
             </div>
 
             {/* CLASS INFO  */}
@@ -377,8 +380,55 @@ const ClassRoom = () => {
 
           {/* CLASSROOM RIGHT SIDE  */}
           <div className="col-span-4">
-            {/* TEACHER ATTACHMENTS  */}
+            {/* TEACHER DETAILS  */}
 
+            {
+              role === "Teacher" && <div className="flex flex-col items-center w-full mb-7">
+              <div className="flex gap-5 w-full items-center mb-2.5">
+                <div className="w-full max-w-[3rem] h-[3rem] rounded-full overflow-hidden bg-blue-500 cursor-pointer group relative">
+                  {
+                    classroom?.teacher?.avatar === null ? <svg
+                    width="28"
+                    height="48"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="mx-auto"
+                  >
+                    <path
+                      d="M10.0002 0.157227C7.87916 0.157227 6.15405 1.88281 6.15405 4.00381V5.99662C6.15405 8.11777 7.87916 9.84336 10.0002 9.84336C12.1213 9.84336 13.8463 8.11777 13.8463 5.99662V4.00381C13.8463 1.88281 12.1213 0.157227 10.0002 0.157227Z"
+                      fill="#8391A9"
+                    ></path>
+                    <path
+                      d="M18.4821 14.8561C17.2506 12.7573 15.282 11.2013 12.9391 10.4747C12.8848 10.4579 12.8261 10.4722 12.7856 10.5122C11.6957 11.5868 10.3415 12.4252 10.0029 12.6277C9.64149 12.3967 8.1192 11.4044 7.21421 10.5122C7.1739 10.4722 7.11469 10.4579 7.06068 10.4747C4.71749 11.2015 2.74909 12.7574 1.51797 14.8562C1.48978 14.9043 1.48978 14.9639 1.51797 15.012C3.26622 17.991 6.51629 19.8416 9.9999 19.8416C13.4837 19.8416 16.7339 17.991 18.4821 15.012C18.5105 14.9638 18.5105 14.9041 18.4821 14.8561ZM15.231 16.0034C15.231 16.0883 15.1502 16.1532 15.0655 16.1532H14.0238C13.9389 16.1532 13.8463 16.2261 13.8463 16.3111V17.3884C13.8463 17.4731 13.801 17.5378 13.7161 17.5378H12.7805C12.6957 17.5378 12.6157 17.4731 12.6157 17.3884V16.3111C12.6154 16.2262 12.5574 16.1532 12.4725 16.1532H11.386C11.3011 16.1532 11.2309 16.0881 11.2309 16.0034V15.0759C11.2309 14.991 11.3011 14.9225 11.386 14.9225H12.4725C12.5574 14.9225 12.6154 14.8532 12.6154 14.7682V13.6897C12.6154 13.6048 12.6953 13.5379 12.7802 13.5379H13.7057C13.7904 13.5379 13.8462 13.6048 13.8462 13.6897V14.7714C13.8462 14.8564 13.9284 14.9224 14.0134 14.9224H15.0655C15.1502 14.9224 15.231 14.9942 15.231 15.0791V16.0034Z"
+                      fill="#8391A9"
+                    ></path>
+                  </svg>: <img src={classroom?.teacher?.avatar} alt="teacher avatar" />
+                  }
+                </div>
+                <div>
+                  <h5 className="mb-1.5 text-[1.125rem] leading-[1.75rem] font-nunito font-extrabold">
+                    {classroom?.teacher?.first_name}{" "}
+                    {classroom?.teacher?.last_name}
+                  </h5>
+                </div>
+              </div>
+              <div className="w-full">
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  {classroom?.teacher?.subjects?.map((item) => (
+                    <div
+                      key={item.id}
+                      className="bg-blue-50 py-1 px-2.5 rounded-[6px] text-[14px] text-gray-400 shadow-sm font-nunito font-semibold"
+                    >
+                      {item.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            }
+
+            {/* TEACHER ATTACHMENTS  */}
             <div className="mb-2.5 h-full max-h-[430px] ">
               {classroom.lock ? (
                 <NoAccess text="You don't have access to this classroom teacher attachments" />
