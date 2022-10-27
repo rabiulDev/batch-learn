@@ -30,7 +30,7 @@ const Calender = () => {
     setOpenModal(true);
   };
   useEffect(() => {
-    const URL = `classrooms/?min_date=2022-09-24%2000:00&max_date=2022-11-05%2023:59&school=${filteredSchool}&subject=${filteredSubject}`;
+    const URL = `classrooms/?min_date=2022-10-22%2000:00&max_date=2022-10-29%2023:59&school=${filteredSchool}&subject=${filteredSubject}`;
     fetchData
       .get(URL)
       .then((res) => {

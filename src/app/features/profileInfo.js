@@ -40,7 +40,7 @@ export const profileInfoSlice = createSlice({
     [loadProfileInfoData.fulfilled]: (state, {payload}) => {
       state.isLoading = false;
       state.profileInfo = payload;
-      state.filteredSubject = payload?.subjects?.map((item) => item.id)
+      state.filteredSubject = payload?.subjects ? payload?.subjects?.map((item) => item.id) : []
     },
 
     [loadProfileInfoData.rejected]: (state, action) => {
