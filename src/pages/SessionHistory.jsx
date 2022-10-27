@@ -8,10 +8,11 @@ import useAuth from "../auth/useAuth";
 const SessionHistory = () => {
   const { fetchData } = useAuth();
   const dispatch = useDispatch();
-  const { isLoading, allHistory, isError } = useSelector(
+  const { isLoading, allHistory } = useSelector(
     (state) => state.sessionHistory
   );
-
+  const { role } = useSelector((state) => state.accout);
+  const { profileInfo } = useSelector((state) => state.profileInfo);
   const columns = [
     {
       title: "Title",
@@ -37,7 +38,6 @@ const SessionHistory = () => {
       width: 200,
     },
   ];
-
   const data = allHistory?.results?.map((item) => {
     return {
       key: item.id,
@@ -52,8 +52,11 @@ const SessionHistory = () => {
   });
 
   useEffect(() => {
-    dispatch(loadHistoryData(fetchData));
-  }, []);
+    const URL = role === "Teacher" ? `classrooms/pagination-list/?teacher=${profileInfo?.id}&student=&page=1&page_size=10` : `classrooms/pagination-list/?teacher=&student=${profileInfo?.id}&page=1&page_size=10`
+   if(role){
+    dispatch(loadHistoryData({fetchData, URL}))
+   };
+  }, [role, profileInfo]);
 
   return (
     <>
@@ -100,7 +103,7 @@ const SessionHistory = () => {
       </div>
 
       <Table
-        loading={isLoading}
+        loading={role==="" || isLoading}
         columns={columns}
         dataSource={data}
         pagination={{

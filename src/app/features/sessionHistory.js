@@ -8,11 +8,9 @@ const initialState = {
 
 export const loadHistoryData = createAsyncThunk(
   "history/data",
-  async (fetchData, { rejectWithValue }) => {
+  async ({fetchData, URL}, { rejectWithValue }) => {
     try {
-      const response = await fetchData.get(
-        "classrooms/pagination-list/?teacher=&student=11&page=1&page_size=10"
-      );
+      const response = await fetchData.get(URL);
       if (response.data) {
         return response.data;
       }
