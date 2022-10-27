@@ -220,8 +220,8 @@ const Profile = () => {
             first_name: profileInfo?.first_name,
             last_name: profileInfo?.last_name,
             phone_number: profileInfo?.phone_number,
-            subjects: profileInfo?.subjects.map((item) => item.id),
-            classes_tools: profileInfo?.classes_tools.map((item) => item.id),
+            subjects: profileInfo?.subjects && profileInfo?.subjects.map((item) => item.id),
+            classes_tools: profileInfo?.classes_tools && profileInfo?.classes_tools.map((item) => item.id),
             remember: true,
           }}
         >

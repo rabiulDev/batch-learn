@@ -1,13 +1,48 @@
+//https://api.staging.batchlearn.com/api/v1/classrooms/56/end-classroom/
+
 import React, { useState } from "react";
 import Countdown, { zeroPad } from "react-countdown";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import useAuth from "../auth/useAuth";
 import JoinClassroomConfirmModal from "./JoinClassroomConfirmModal";
+import { loadClassroomData } from "../app/features/classRoom";
+import { useParams } from "react-router-dom";
+import { Button } from "antd";
 
 const ClassroomCountdown = () => {
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { fetchData } = useAuth();
+  const { id } = useParams();
   const [openConfirm, setOpenConfirm] = useState();
   const { classroom } = useSelector((state) => state.classRoom);
   const { role } = useSelector((state) => state.accout);
-
+  const URL = `classrooms/${id}/public-details/`;
+  const handleJoinTeacher = (id) => {
+    setLoading(true);
+    fetchData
+      .post("classrooms/join-teacher/", { classroom_id: id })
+      .then((res) => {
+        console.log(res.data);
+        dispatch(loadClassroomData({ fetchData, URL }));
+        setLoading(false);
+        toast.success(res?.data.message, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
   const countDownRenderer = ({ days, hours, minutes, seconds, completed }) => {
     if (completed) {
       // Render a completed state
@@ -53,13 +88,23 @@ const ClassroomCountdown = () => {
             </div>
           ) : (
             <div className="flex items-center justify-center mt-6">
-              {classroom.teacher === null && (
-                <button
-                  onClick={() => setOpenConfirm(classroom.classroom_id)}
-                  className="py-[15px] px-14 bg-blue-500 rounded-[0.625rem] text-base text-white font-bold font-nunito hover:bg-blue-500 transition duration-300"
+              {loading ? (
+                <Button
+                  disabled
+                  loading
+                  className="!py-[15px] !h-auto !px-6 !rounded-[0.625rem] !text-base !font-bold !font-nunito "
                 >
-                  Accept
-                </button>
+                  Processing
+                </Button>
+              ) : (
+                classroom.teacher === null && (
+                  <button
+                    onClick={() => handleJoinTeacher(classroom.classroom_id)}
+                    className="py-[15px] px-14 bg-blue-500 rounded-[0.625rem] text-base text-white font-bold font-nunito hover:bg-blue-500 transition duration-300"
+                  >
+                    Accept
+                  </button>
+                )
               )}
             </div>
           )}

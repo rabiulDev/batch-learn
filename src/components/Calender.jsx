@@ -143,6 +143,7 @@ const Calender = () => {
                 day: "Day",
                 list: "List",
               }}
+              dayMaxEventRows={3}
               dateClick={(event) => calendarEventHandler(event)}
               events={classEvents}
               eventColor="#FFBF00"
@@ -177,6 +178,7 @@ const Calender = () => {
                 day: "Day",
                 list: "List",
               }}
+              dayMaxEventRows={3}
               events={classEvents}
               eventBackgroundColor={"#FFBF23"}
               eventBorderColor={"#FFBF23"}
