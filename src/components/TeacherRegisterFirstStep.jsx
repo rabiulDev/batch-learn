@@ -6,9 +6,11 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setFirstStepData } from "../app/features/teacherRegisterData";
 import TeacherRegisProcessBtn from "./TeacherRegisProcessBtn";
+import { toast } from "react-toastify";
 const { Option } = Select;
 
 const TeacherRegisterFirstStep = ({ setCurrent }) => {
+
   const dispatch = useDispatch();
   const { teacherType } = useSelector((state) => state.teacherTypes);
   const { firstStepData } = useSelector((state) => state.teacherRegistrationData);
@@ -26,9 +28,7 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
     };
     dispatch(setFirstStepData(regData));
     setLoading(true)
-    try {
-      axios
-        .post(
+    axios.post(
           "https://api.staging.batchlearn.com/api/v1/auth/register-teacher-first-step/",
           regData
         )
@@ -37,13 +37,20 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
             setLoading(false)
             setCurrent((prev) => prev + 1);
           }
-        });
-    } catch (error) {
-      setLoading(false)
-      console.log(error.message);
+        }).catch((err)=>{
+          setLoading(false)
+          toast.error("Phone number or password is not valid", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          })
+        })
     }
-    
-  };
 
   const prefixPhoneSelector = (
     <Form.Item name="phonePrefix" noStyle>
@@ -419,6 +426,6 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
       </Form>
     </div>
   );
-};
+}
 
 export default TeacherRegisterFirstStep;
