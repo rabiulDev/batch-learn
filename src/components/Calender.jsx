@@ -6,30 +6,40 @@ import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
 import SessionModal from "./SessionModal";
 import { useDispatch, useSelector } from "react-redux";
-import { loadClassEventData } from "../app/features/classEvents";
+// import { loadClassEventData } from "../app/features/classEvents";
+import { setFilteredSubject } from "../app/features/profileInfo";
 import useAuth from "../auth/useAuth";
 import { useNavigate } from "react-router-dom";
 import { Checkbox, Spin } from "antd";
 
 const Calender = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { fetchData } = useAuth();
   const [openModal, setOpenModal] = useState(false);
   const [date, setDate] = useState();
-  const dispatch = useDispatch();
-  const { allClasses } = useSelector((state) => state.classEvents);
   const { subjects } = useSelector((state) => state.subjects);
   const { school } = useSelector((state) => state.schools);
-
-  const {isLoading,  role } = useSelector((state) => state.accout);
+  const [allClasses, setAllClasses] = useState([]);
+  const { isLoading, role } = useSelector((state) => state.accout);
+  const { filteredSubject } = useSelector((state) => state.profileInfo);
+  const [filteredSchool, setFilteredSchool] = useState([]);
 
   const calendarEventHandler = (event) => {
     setDate(event.dateStr);
     setOpenModal(true);
   };
   useEffect(() => {
-   dispatch(loadClassEventData(fetchData));
-  }, []);
+    const URL = `classrooms/?min_date=2022-09-24%2000:00&max_date=2022-11-05%2023:59&school=${filteredSchool}&subject=${filteredSubject}`;
+    fetchData
+      .get(URL)
+      .then((res) => {
+        setAllClasses(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [filteredSubject, filteredSchool]);
 
   const handleEventClick = ({ event }) => {
     navigate(`classroom/${event._def.publicId}`);
@@ -37,15 +47,14 @@ const Calender = () => {
   const classEvents = allClasses?.map((data) => {
     return { id: data.id, title: data.title, date: data.class_date };
   });
-
-
-if(isLoading){
-  return <div className="h-[70vh] w-full flex items-center justify-center">
-  <Spin />
-</div>
-}
+  if (isLoading) {
+    return (
+      <div className="h-[70vh] w-full flex items-center justify-center">
+        <Spin />
+      </div>
+    );
+  }
   return (
-
     <>
       {/* DASHBOARD BREADCUMBER  */}
       <div className="mb-9 flex items-center gap-2.5">
@@ -112,64 +121,70 @@ if(isLoading){
       </div>
 
       <div className="grid grid-cols-12 gap-6 w-full pb-5">
-        {role === "Student" ? <div className="col-span-10">
-          <FullCalendar
-            plugins={[
-              dayGridPlugin,
-              timeGridPlugin,
-              listPlugin,
-              interactionPlugin,
-            ]}
-            initialView="timeGridWeek"
-            headerToolbar={{
-              left: "today prev,next",
-              center: "title",
-              right: "dayGridMonth timeGridWeek timeGridDay listWeek",
-            }}
-            buttonText={{
-              today: "Today",
-              month: "Month",
-              week: "Week",
-              day: "Day",
-              list: "List",
-            }}
-            dateClick={(event) => calendarEventHandler(event)}
-            events={classEvents}
-            eventColor="#FFBF00"
-            eventClick={(e) => handleEventClick(e)}
-          />
+        {role === "Student" ? (
+          <div className="col-span-10">
+            <FullCalendar
+              plugins={[
+                dayGridPlugin,
+                timeGridPlugin,
+                listPlugin,
+                interactionPlugin,
+              ]}
+              initialView="timeGridWeek"
+              headerToolbar={{
+                left: "today prev,next",
+                center: "title",
+                right: "dayGridMonth timeGridWeek timeGridDay listWeek",
+              }}
+              buttonText={{
+                today: "Today",
+                month: "Month",
+                week: "Week",
+                day: "Day",
+                list: "List",
+              }}
+              dateClick={(event) => calendarEventHandler(event)}
+              events={classEvents}
+              eventColor="#FFBF00"
+              eventClick={(e) => handleEventClick(e)}
+            />
 
-          <SessionModal
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-            date={date}
-          />
-        </div>: <div className="col-span-9">
-          <FullCalendar
-            plugins={[
-              dayGridPlugin,
-              timeGridPlugin,
-              listPlugin,
-              interactionPlugin,
-            ]}
-            initialView="timeGridWeek"
-            headerToolbar={{
-              left: "today prev,next",
-              center: "title",
-              right: "dayGridMonth timeGridWeek timeGridDay listWeek",
-            }}
-            buttonText={{
-              today: "Today",
-              month: "Month",
-              week: "Week",
-              day: "Day",
-              list: "List",
-            }}
-            events={classEvents}
-            eventColor="#FFBF00"
-            eventClick={(e) => handleEventClick(e)}
-          />
-        </div>}
+            <SessionModal
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+              date={date}
+            />
+          </div>
+        ) : (
+          <div className="col-span-9">
+            <FullCalendar
+              plugins={[
+                dayGridPlugin,
+                timeGridPlugin,
+                listPlugin,
+                interactionPlugin,
+              ]}
+              initialView="timeGridWeek"
+              headerToolbar={{
+                left: "today prev,next",
+                center: "title",
+                right: "dayGridMonth timeGridWeek timeGridDay listWeek",
+              }}
+              buttonText={{
+                today: "Today",
+                month: "Month",
+                week: "Week",
+                day: "Day",
+                list: "List",
+              }}
+              events={classEvents}
+              eventBackgroundColor={"#FFBF23"}
+              eventBorderColor={"#FFBF23"}
+              eventColor="#FFBF00"
+              eventClick={(e) => handleEventClick(e)}
+            />
+          </div>
+        )}
 
         {/* SIDE INDICATORS  */}
 
@@ -210,7 +225,13 @@ if(isLoading){
           {/* TEACHER OPTIONS */}
           {role && role === "Teacher" && (
             <div>
-              <div className="flex items-center gap-1.5 cursor-pointer mt-5 justify-end">
+              <div
+                onClick={() => {
+                  dispatch(setFilteredSubject([]));
+                  setFilteredSchool([]);
+                }}
+                className="flex items-center gap-1.5 cursor-pointer mt-5 justify-end"
+              >
                 <span>
                   <svg
                     width="20"
@@ -251,19 +272,14 @@ if(isLoading){
                   </div>
                 </div>
                 <ul className="h-64 px-[1.875rem] pt-4">
-                  <Checkbox.Group>
-                    <div className="flex flex-col gap-5 mt-1">
-                      {subjects?.map((item) => (
-                        <Checkbox
-                          key={item.id}
-                          value={item.id}
-                          className="!m-0 !text-gray-500 !text-base !font-semibold !font-nunito"
-                        >
-                          {item.name}
-                        </Checkbox>
-                      ))}
-                    </div>
-                  </Checkbox.Group>
+                  {filteredSubject && <Checkbox.Group
+                    className="!flex !flex-col !gap-5"
+                    options={subjects?.map((item)=>({label: item.name, value: item.id}))}
+                    defaultValue={filteredSubject}                
+                    onChange={(val) => dispatch(setFilteredSubject(val))}
+                    value={filteredSubject}
+                  />}
+                  
                 </ul>
               </div>
 
@@ -274,19 +290,12 @@ if(isLoading){
                   </div>
                 </div>
                 <ul className="h-64 px-[1.875rem] pt-4">
-                  <Checkbox.Group>
-                    <div className="flex flex-col gap-5">
-                      {school?.map((item) => (
-                        <Checkbox
-                          key={item.id}
-                          value={item.id}
-                          className="!m-0 !text-gray-500 !text-base !font-semibold !font-nunito"
-                        >
-                          {item.name}
-                        </Checkbox>
-                      ))}
-                    </div>
-                  </Checkbox.Group>
+                  <Checkbox.Group
+                  className="!flex !flex-col !gap-5"
+                  options={school?.map((item)=>({label: item.name, value: item.id}))}
+                  onChange={(val)=> setFilteredSchool(val)}
+                  value={filteredSchool}
+                  />
                 </ul>
               </div>
             </div>

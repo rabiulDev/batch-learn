@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: false,
   profileInfo: {},
+  filteredSubject:[],
   isError: "",
 };
 
@@ -25,16 +26,21 @@ export const loadProfileInfoData = createAsyncThunk(
 export const profileInfoSlice = createSlice({
   name: "profileInfo",
   initialState,
-  reducers: {},
+  reducers: {
+    setFilteredSubject: (state, {payload})=>{
+      state.filteredSubject = payload
+    }
+  },
 
   extraReducers: {
     [loadProfileInfoData.pending]: (state, action) => {
       state.isLoading = true;
     },
 
-    [loadProfileInfoData.fulfilled]: (state, action) => {
+    [loadProfileInfoData.fulfilled]: (state, {payload}) => {
       state.isLoading = false;
-      state.profileInfo = action.payload;
+      state.profileInfo = payload;
+      state.filteredSubject = payload?.subjects?.map((item) => item.id)
     },
 
     [loadProfileInfoData.rejected]: (state, action) => {
@@ -44,4 +50,5 @@ export const profileInfoSlice = createSlice({
   },
 });
 
+export const {setFilteredSubject} = profileInfoSlice.actions
 export default profileInfoSlice.reducer;
