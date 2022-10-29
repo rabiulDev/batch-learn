@@ -476,3 +476,20 @@ a {
 .withdraw {
   background: rgba(63,140,254,.4)!important;
 }
+
+.fc-day-today {
+  background: #f4f7f9 !important;
+} 
+/* .fc-scroller{
+  overflow-x: scroll !important;
+  overflow-y: visible !important;
+} */
+
+.fc-col-header-cell > .fc-scrollgrid-sync-inner{
+  background: white;
+}
+
+.fc-list-day-cushion.fc-cell-shaded {
+background: white;
+}
+

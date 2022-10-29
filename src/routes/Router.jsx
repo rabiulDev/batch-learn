@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Calender from "../components/Calender";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Billings from "../pages/Billings";
@@ -35,6 +35,10 @@ const Router = () => {
       <Route path="/register-student" element={<StudentRegister />} />
       <Route path="/register-teacher" element={<TeacherRegister/>}/>
       <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+      <Route
+        path="*"
+        element={<Navigate to="/" replace />}
+    />
     </Routes>
   );
 };

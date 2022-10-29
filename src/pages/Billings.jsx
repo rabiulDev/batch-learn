@@ -2,13 +2,16 @@ import React from "react";
 import { Tabs } from "antd";
 import Cards from "../components/Cards";
 import InvoiceTable from "../components/InvoiceTable";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const Billings = () => {
-
+  const navigate = useNavigate()
+  const {isLoading,  role } = useSelector((state) => state.accout);
   const onChange = (key) => {
     // console.log(key);
   };
 
-  return (
+  return isLoading ? <div></div> : role === "Student" ? (
     <>
       {/* BILLINGS BREADCUMBER  */}
       <div className="mb-9 flex items-center gap-2.5">
@@ -74,7 +77,7 @@ const Billings = () => {
         ]}
       />
     </>
-  );
+  ) : (navigate("/"))
 };
 
 export default Billings;
