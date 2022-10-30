@@ -25,7 +25,7 @@ const Calender = () => {
   const { isLoading, role } = useSelector((state) => state.accout);
   const { filteredSubject } = useSelector((state) => state.profileInfo);
   const [filteredSchool, setFilteredSchool] = useState([]);
-
+  const [maxMinDate, setMaxMinTime] = useState()
   const calendarEventHandler = (event) => {
     setDate(event.dateStr);
     setOpenModal(true);
@@ -128,7 +128,7 @@ const Calender = () => {
     return { html: customHeader };
   };
   useEffect(() => {
-    const URL = `classrooms/?min_date=2022-10-22%2000:00&max_date=2022-10-29%2023:59&school=${filteredSchool}&subject=${filteredSubject}`;
+    const URL = `classrooms/?min_date=${moment(maxMinDate?.startStr).format("YYYY-MM-DD")}%2000:00&max_date=${moment(maxMinDate?.endStr).format("YYYY-MM-DD")}%2023:59&school=${filteredSchool}&subject=${filteredSubject}`;
     fetchData
       .get(URL)
       .then((res) => {
@@ -137,7 +137,7 @@ const Calender = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [filteredSubject, filteredSchool]);
+  }, [filteredSubject, filteredSchool, maxMinDate]);
 
   const handleEventClick = ({ event }) => {
     navigate(`classroom/${event._def.publicId}`);
@@ -255,7 +255,7 @@ const Calender = () => {
             events={classEvents}
             eventColor="#FFBF00"
             eventClick={(e) => handleEventClick(e)}
-            // datesSet={(e) => setTimeout(e)}
+            datesSet={(e) => setMaxMinTime(e)}
             eventContent={handleEventContent}
             height="auto"
             dayHeaderContent={handleDayHeaderContent}

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFirstStepData } from "../app/features/teacherRegisterData";
 import TeacherRegisProcessBtn from "./TeacherRegisProcessBtn";
 import { toast } from "react-toastify";
+import PhoneInput from "react-phone-input-2";
 const { Option } = Select;
 
 const TeacherRegisterFirstStep = ({ setCurrent }) => {
@@ -23,7 +24,7 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
       is_accept: data.is_accept,
       last_name: data.last_name,
       password: data.password,
-      phone_number: data.phonePrefix + data.phone_number,
+      phone_number: `+${data.phone_number}`,
       teacher_type: data.occupation,
     };
     dispatch(setFirstStepData(regData));
@@ -51,21 +52,6 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
           })
         })
     }
-
-  const prefixPhoneSelector = (
-    <Form.Item name="phonePrefix" noStyle>
-      <Select
-        initialvalues="+86"
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="+880">+880</Option>
-        <Option value="+860">+860</Option>
-        <Option value="+870">+870</Option>
-      </Select>
-    </Form.Item>
-  );
   return (
     <div>
       <Form
@@ -81,8 +67,7 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
           is_accept: firstStepData?.is_accept,
           last_name: firstStepData?.last_name,
           password: firstStepData?.password,
-          phonePrefix: firstStepData?.phone_number?.slice(0, 4),
-          phone_number: firstStepData?.phone_number?.slice(4),
+          phone_number: firstStepData?.phone_number,
           occupation: firstStepData?.teacher_type,
           remember: true,
         }}
@@ -243,14 +228,12 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
                 },
               ]}
             >
-              <Input
-                size="large"
-                placeholder="Phone number"
-                addonBefore={prefixPhoneSelector}
-                style={{
-                  width: "100%",
-                }}
-              />
+              <PhoneInput
+                    placeholder="Phone number"
+                    disableSearchIcon={true}
+                    specialLabel=""
+                    country={"eg"}
+                  />
             </Form.Item>
           </div>
         </div>
@@ -300,7 +283,7 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
               <Input.Password
                 prefix={
                   <svg
-                    data-v-3b0cc4aa=""
+                    className="mr-3"
                     fill="none"
                     height="20"
                     viewBox="0 0 16 20"
@@ -308,7 +291,7 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      data-v-3b0cc4aa=""
+                     
                       d="M12.0548 7.6605V5.69242C12.0548 3.38884 10.1866 1.52067 7.88301 1.52067C5.57943 1.51059 3.70393 3.36959 3.69385 5.67409V5.69242V7.6605"
                       stroke="#95A3BD"
                       strokeLinecap="round"
@@ -316,7 +299,7 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
                       strokeWidth="1.2"
                     ></path>{" "}
                     <path
-                      data-v-3b0cc4aa=""
+                    
                       clipRule="evenodd"
                       d="M11.3762 18.4788H4.372C2.4525 18.4788 0.895996 16.9232 0.895996 15.0028V11.0712C0.895996 9.1508 2.4525 7.59521 4.372 7.59521H11.3762C13.2957 7.59521 14.8522 9.1508 14.8522 11.0712V15.0028C14.8522 16.9232 13.2957 18.4788 11.3762 18.4788Z"
                       fillRule="evenodd"
@@ -326,7 +309,7 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
                       strokeWidth="1.2"
                     ></path>{" "}
                     <path
-                      data-v-3b0cc4aa=""
+                  
                       d="M7.87429 12.0192V14.0551"
                       stroke="#95A3BD"
                       strokeLinecap="round"
@@ -336,7 +319,7 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
                   </svg>
                 }
                 size="large"
-                placeholder="......"
+                placeholder="••••••"
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }

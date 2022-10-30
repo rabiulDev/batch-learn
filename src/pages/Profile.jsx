@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadProfileInfoData } from "../app/features/profileInfo";
 import { toast } from "react-toastify";
 import ProfileUploadModal from "../components/ProfileUploadModal";
+import PhoneInput from "react-phone-input-2";
 const { Option } = Select;
 
 const Profile = () => {
@@ -25,7 +26,7 @@ const Profile = () => {
     const updateData = {
       first_name: data.first_name,
       last_name: data.last_name,
-      phone_number: data.phone_number,
+      phone_number: `+${data.phone_number}`,
       subjects: data.subjects,
       classes_tools: data.classes_tools,
     };
@@ -63,21 +64,7 @@ const Profile = () => {
       });
   };
 
-  // console.log(profileInfo);
-  const prefixPhoneSelector = (
-    <Form.Item name="phonePrefix" noStyle>
-      <Select
-        initialvalues="+86"
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="+880">+880</Option>
-        <Option value="+860">+860</Option>
-        <Option value="+870">+870</Option>
-      </Select>
-    </Form.Item>
-  );
+  
   if (profileInfo.email) {
     return (
       <div>
@@ -311,14 +298,12 @@ const Profile = () => {
                   },
                 ]}
               >
-                <Input
-                  size="large"
-                  placeholder="Phone number"
-                  addonBefore={prefixPhoneSelector}
-                  style={{
-                    width: "100%",
-                  }}
-                />
+                <PhoneInput
+                    placeholder="Phone number"
+                    disableSearchIcon={true}
+                    specialLabel=""
+                    country={"eg"}
+                  />
               </Form.Item>
             </Col>
             {role === "Teacher" && (

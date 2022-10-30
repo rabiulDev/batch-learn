@@ -27,6 +27,11 @@
 }
 .ant-input-password input {
   background-color: #f9fbfc !important;
+  letter-spacing: 3px !important;
+}
+.ant-input-password input::placeholder{
+  font-size: 20px;
+  font-weight: 700;
 }
 .ant-input-group-addon {
   border-radius: 10px 0px 0px 10px !important;
@@ -46,8 +51,6 @@
   font-size: 16px!important;
   line-height: 22px!important;
 }
-
-
 
 
 
@@ -175,11 +178,13 @@
   border-width: 0;
 }
 
-.fc-header-toolbar .fc-button.fc-button-active {
+.fc-button.fc-button-active {
   background-color: #3f8cff !important;
   color: #fff !important;
 }
-
+.fc-header-toolbar .fc-button-group .fc-button{
+  background-color:transparent !important;
+}
 .fc-header-toolbar .fc-button {
   border-radius: 5px;
   padding: 9px 20px;
@@ -188,6 +193,7 @@
   height: auto;
   line-height: 13px;
   border-width: 0;
+  font-family: 'Nunito Sans';
   background: transparent;
   color: #042040;
 }
@@ -480,10 +486,6 @@ a {
 .fc-day-today {
   background: #f4f7f9 !important;
 } 
-/* .fc-scroller{
-  overflow-x: scroll !important;
-  overflow-y: visible !important;
-} */
 
 .fc-col-header-cell > .fc-scrollgrid-sync-inner{
   background: white;
@@ -493,3 +495,47 @@ a {
 background: white;
 }
 
+.react-tel-input .flag-dropdown {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding: 0 25px;
+    background-color: transparent;
+  border: none;
+  border-right:1px solid #f2f3f7;
+  border-radius: 0;
+}
+
+.react-tel-input .form-control {
+  padding-left: 95px;
+}
+
+.react-tel-input .flag-dropdown.open {
+  z-index: 2;
+  background: transparent;
+  border-radius:0;
+}
+
+.react-tel-input .flag-dropdown.open .selected-flag {
+  background: transparent;
+  border-radius:0;
+}
+
+.react-tel-input .country-list {
+  outline: none;
+  z-index: 1;
+  list-style: none;
+  position: absolute;
+  padding: 0;
+  margin: 5px 0 10px -24px;
+  box-shadow: 1px 2px 10px rgb(0 0 0 / 35%);
+  background-color: white;
+  width: 225px;
+  max-height: 200px;
+  overflow-y: scroll;
+  border-radius: 0 0 3px 3px;
+}
+
+.react-tel-input .selected-flag:hover, .react-tel-input .selected-flag:focus {
+  background-color: transparent;
+}

@@ -76,6 +76,7 @@ const Login = () => {
                 <Input
                   prefix={
                     <svg
+                    className="mr-2"
                       fill="none"
                       height="18"
                       viewBox="0 0 20 18"
@@ -119,6 +120,7 @@ const Login = () => {
                 <Input.Password
                   prefix={
                     <svg
+                    className="mr-3"
                       fill="none"
                       height="20"
                       viewBox="0 0 16 20"
@@ -151,7 +153,7 @@ const Login = () => {
                     </svg>
                   }
                   size="large"
-                  placeholder="......"
+                  placeholder="••••••"
                   iconRender={(visible) =>
                     visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                   }
