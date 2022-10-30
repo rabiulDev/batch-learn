@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 const { Option } = Select;
 const { TextArea } = Input;
 
-const SessionModal = ({ openModal, setOpenModal, date }) => {
+const SessionModal = ({ openModal, setOpenModal, date, loadEventData }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [openConfirm, setOpenConfirm] = useState(false);
@@ -152,6 +152,7 @@ const SessionModal = ({ openModal, setOpenModal, date }) => {
       <SessionConfirmModal
         openConfirm={openConfirm}
         setOpenConfirm={setOpenConfirm}
+        loadEventData={loadEventData}
       />
     </>
   );

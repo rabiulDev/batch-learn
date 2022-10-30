@@ -127,7 +127,9 @@ const Calender = () => {
     ).format("DD")}</h3></div>`;
     return { html: customHeader };
   };
-  useEffect(() => {
+
+
+  const loadEventData = () =>{
     const URL = `classrooms/?min_date=${moment(maxMinDate?.startStr).format("YYYY-MM-DD")}%2000:00&max_date=${moment(maxMinDate?.endStr).format("YYYY-MM-DD")}%2023:59&school=${filteredSchool}&subject=${filteredSubject}`;
     fetchData
       .get(URL)
@@ -137,6 +139,12 @@ const Calender = () => {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+
+
+  useEffect(() => {
+    loadEventData()
   }, [filteredSubject, filteredSchool, maxMinDate]);
 
   const handleEventClick = ({ event }) => {
@@ -153,6 +161,7 @@ const Calender = () => {
         (data.status === "Ended" && "#FF6A55"),
     };
   });
+
   if (isLoading) {
     return (
       <div className="h-[70vh] w-full flex items-center justify-center">
@@ -265,6 +274,7 @@ const Calender = () => {
             openModal={openModal}
             setOpenModal={setOpenModal}
             date={date}
+            loadEventData={loadEventData}
           />
         </div>
 
