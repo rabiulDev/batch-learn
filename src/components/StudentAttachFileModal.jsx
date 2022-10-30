@@ -1,19 +1,60 @@
 import { Button, Form, Modal, Upload } from "antd";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import useAuth from "../auth/useAuth";
+import { addNewAttach } from "../app/features/studentAttachmentList";
 
 const StudentAttachFileModal = ({ open, close }) => {
+  const { profileInfo } = useSelector((state) => state.profileInfo);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { fetchData } = useAuth();
+  const { id } = useParams();
+  const URL = `classrooms/${id}/student-attachment-create`;
+
+  const handleAttach = ({ attach }) => {
+    const studenAttachFile = new FormData();
+    studenAttachFile.append("file", attach.file);
+    studenAttachFile.append("classroom", id);
+    studenAttachFile.append("student", profileInfo?.id);
+    setLoading(true);
+
+    fetchData
+      .post(URL, studenAttachFile)
+      .then((res) => {
+        dispatch(addNewAttach(res?.data));
+        setLoading(false);
+        close(false);
+        toast.success("Attach file uploaed successfully!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      })
+      .catch((err) => {
+        setLoading(false);
+        close(false);
+        console.log(err);
+      });
+  };
   return (
     <Modal open={open} onCancel={() => close(false)} footer={null}>
       <div className="pt-[10px] pb-[10px] px-[10px] sm:px-[10px]">
         <div className="mb-[1.875rem] font-nunito">
           <h3 className="text-[24px] leading-[30px] font-extrabold">
-          Upload files
+            Upload files
           </h3>
         </div>
-        <Form name="studentAttach" >
+        <Form name="studentAttach" onFinish={handleAttach}>
           <Form.Item name="attach" valuePropName="name">
-            <Upload beforeUpload={() => false} >
+            <Upload beforeUpload={() => false}>
               <div className="flex items-center justify-center w-full h-20 px-4 mb-3 transition bg-white border-2 border-gray-200 border-dashed appearance-none cursor-pointer hover:border-gray-200 focus:outline-none">
                 <span className="flex items-center space-x-2">
                   <span>

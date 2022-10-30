@@ -383,7 +383,7 @@ const ClassRoom = () => {
             {/* TEACHER DETAILS  */}
 
             {
-              role === "Teacher" && classroom?.teacher !== null && <div className="flex flex-col items-center w-full mb-7">
+             classroom?.teacher !== null && <div className="flex flex-col items-center w-full mb-7">
               <div className="flex gap-5 w-full items-center mb-2.5">
                 <div className="w-full max-w-[3rem] h-[3rem] rounded-full overflow-hidden bg-blue-500 cursor-pointer group relative">
                   {
@@ -438,7 +438,12 @@ const ClassRoom = () => {
             </div>
             {/* STUDENT ATTACHMENTS  */}
             <div className="mb-2.5 h-full max-h-[430px] ">
-              <StudentAttachments />
+            {classroom.lock ? (
+                <NoAccess text="You don't have access to this classroom student attachments" />
+              ) : (
+                <StudentAttachments />
+              )}
+              
             </div>
           </div>
         </div>

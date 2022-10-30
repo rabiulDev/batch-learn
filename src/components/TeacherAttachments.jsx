@@ -13,7 +13,7 @@ const TeacherAttachments = () => {
   const {fetchData} = useAuth()
   const dispatch = useDispatch()
   const { role } = useSelector((state) => state.accout);
-  const { teacherAttachment, attachmentList } = useSelector((state) => state.teacherAttachList);
+  const {attachmentList } = useSelector((state) => state.teacherAttachList);
   const { id } = useParams();
   const URL = `classrooms/${id}/teacher-attachment-list/?page=1&page_size=10`
 
@@ -30,8 +30,8 @@ const TeacherAttachments = () => {
         </div>
         <ul className='overflow-y-scroll h-80 overflow-x-hidden'>
           
-          {teacherAttachment?.count === 0 && <p className='text-center text-[#7D8DA6] text-base font-nunito font-semibold h-full flex items-center justify-center'> No Attachment found!</p>}
-          {teacherAttachment?.count !== 0 && attachmentList?.map((item)=>{
+          {attachmentList?.length === 0 && <p className='text-center text-[#7D8DA6] text-base font-nunito font-semibold h-full flex items-center justify-center'> No Attachment found!</p>}
+          {attachmentList?.map((item)=>{
           return  <li key={item.id} className='list__item text-[16px] leading-[26px] text-gray-400 py-2.5 px-[1.875rem] cursor-pointer hover:bg-blue-50 font-semibold font-nunito'>
             <a className='text-gray-400 text-ellipsis' href={item.file} target="_blank"> {item?.file?.split("?")[0].split("_path/")[1]}</a>
           </li>

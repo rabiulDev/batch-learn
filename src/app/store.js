@@ -15,6 +15,7 @@ import subjectsReducer from "../app/features/getSubjects"
 import classToolsReducer from "../app/features/getClassesTools"
 import teacherRegistrationDataReducer from "../app/features/teacherRegisterData"
 import teacherAttachListReducer from "../app/features/teacherAttachmentList"
+import studentAttachListReducer from "../app/features/studentAttachmentList"
 
 
 export const store = configureStore({
@@ -35,6 +36,7 @@ export const store = configureStore({
     teacherTypes: teacherTypesReducer,
     teacherRegistrationData: teacherRegistrationDataReducer,
     teacherAttachList: teacherAttachListReducer,
+    studentAttachList: studentAttachListReducer
   },
 
   // Disable the non-serializable value checking

@@ -13,25 +13,26 @@ const ClassroomComment = () => {
   const dispatch = useDispatch();
   const { fetchData } = useAuth();
   const { id } = useParams();
-  const CREATE_COMMENT_URL = `classrooms/${id}/classroom-comment-create/`
+  const CREATE_COMMENT_URL = `classrooms/${id}/classroom-comment-create/`;
   const URL = `classrooms/${id}/classroom-comments/?page=1&page_size=10`;
   const { isLoading, comments, results, isError } = useSelector(
     (state) => state.comments
   );
-  const {account} = useSelector(
-    (state) => state.accout
-  );
+  const { account } = useSelector((state) => state.accout);
 
-  const handleCommentButtonClick = ({message}) => {
-    fetchData.post(CREATE_COMMENT_URL, {
-      comment: message,
-      classroom: id,
-      creator: account?.id
-  }).then((res)=>{
-    dispatch(addNewComment(res?.data))
-  }).catch((err)=>{
-    console.log(err)
-  })
+  const handleCommentButtonClick = ({ message }) => {
+    fetchData
+      .post(CREATE_COMMENT_URL, {
+        comment: message,
+        classroom: id,
+        creator: account?.id,
+      })
+      .then((res) => {
+        dispatch(addNewComment(res?.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     form.resetFields();
   };
@@ -40,10 +41,6 @@ const ClassroomComment = () => {
     dispatch(loadCommentsData({ fetchData, URL }));
   }, []);
 
-  // console.log("Main", comments)
-  // console.log("Reply comments", reply_comments)
-  // console.log("comments", results)
-
   return (
     <div className="relative col-span-7 bg-white rounded-[8px] border border-gray-200 p-5">
       <div className="text-[15px] leading-[25px] text-black font-bold font-nunito">
@@ -51,21 +48,24 @@ const ClassroomComment = () => {
       </div>
 
       <div className="h-[480px] overflow-y-scroll my-2.5">
-        {comments.count ? (
-          results.map((result) => (
-            <CommentCart key={result.id} result={result} show={show} setShow={setShow}>
-                {
-                  result.reply_comments?.map((repcom)=>{
-                     return <ReplyCommentCard key={repcom.id} result={repcom}/>
-                  })
-                }
-            </CommentCart>
-          ))
-        ) : (
+        {results?.length === 0 && (
           <p className="text-center text-[#7D8DA6] text-base font-nunito font-semibold h-full flex items-center justify-center">
             No comments found!
           </p>
         )}
+
+        {results?.map((result) => (
+          <CommentCart
+            key={result.id}
+            result={result}
+            show={show}
+            setShow={setShow}
+          >
+            {result.reply_comments?.map((repcom) => {
+              return <ReplyCommentCard key={repcom.id} result={repcom} />;
+            })}
+          </CommentCart>
+        ))}
       </div>
 
       {/* COMMENT INPUT FIELD  */}

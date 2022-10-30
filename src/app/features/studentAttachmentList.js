@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
   isLoading: false,
-  teacherAttachment: {},
-  attachmentList: [],
+  studentAttachment: {},
+  studentAttachmentList: [],
   isError: "",
 };
 
-export const loadTeacherAttachmentList = createAsyncThunk(
-  "teacher-attachment/data",
+export const loadStudentAttachmentList = createAsyncThunk(
+  "stuent-attachment/data",
   async ({fetchData, URL},{ rejectWithValue }) => {
     try {
       const response = await fetchData.get(URL);
@@ -20,8 +20,8 @@ export const loadTeacherAttachmentList = createAsyncThunk(
   }
 );
 
-export const teacherAttachListSlice = createSlice({
-  name: "teacherAttachList",
+export const studentAttachListSlice = createSlice({
+  name: "studentAttachList",
   initialState,
   reducers: {
     addNewAttach: (state, action) => {
@@ -30,22 +30,22 @@ export const teacherAttachListSlice = createSlice({
   },
 
   extraReducers: {
-    [loadTeacherAttachmentList.pending]: (state, action) => {
+    [loadStudentAttachmentList.pending]: (state, action) => {
       state.isLoading = true;
     },
 
-    [loadTeacherAttachmentList.fulfilled]: (state, {payload}) => {
+    [loadStudentAttachmentList.fulfilled]: (state, {payload}) => {
       state.isLoading = false;
-      state.teacherAttachment = payload;
-      state.attachmentList = payload.results
+      state.studentAttachment = payload;
+      state.studentAttachmentList = payload.results
     },
 
-    [loadTeacherAttachmentList.rejected]: (state, action) => {
+    [loadStudentAttachmentList.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = action.payload;
     },
   },
 });
 
-export const {addNewAttach} = teacherAttachListSlice.actions
-export default teacherAttachListSlice.reducer;
+export const {addNewAttach} = studentAttachListSlice.actions
+export default studentAttachListSlice.reducer;

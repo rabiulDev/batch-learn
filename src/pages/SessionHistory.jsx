@@ -2,10 +2,12 @@ import { Table } from "antd";
 import moment from "moment";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { loadHistoryData } from "../app/features/sessionHistory";
 import useAuth from "../auth/useAuth";
 
 const SessionHistory = () => {
+  const navigate = useNavigate()
   const { fetchData } = useAuth();
   const dispatch = useDispatch();
   const { isLoading, allHistory } = useSelector(
@@ -103,6 +105,11 @@ const SessionHistory = () => {
       </div>
 
       <Table
+        onRow = {record =>({
+          onClick:(e)=>{
+              navigate(`/classroom/${record.key}/`)
+          }
+      })}
         loading={role==="" || isLoading}
         columns={columns}
         dataSource={data}
