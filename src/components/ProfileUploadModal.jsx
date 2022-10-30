@@ -9,6 +9,7 @@ const ProfileUploadModal = ({ open, close }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { fetchData } = useAuth();
+  
   const handleUploadAvatar = ({avatar}) => {
     const avatarData = new FormData()
      avatarData.append("file", avatar.file)

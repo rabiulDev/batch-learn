@@ -1,8 +1,47 @@
 import { Button, Form, Modal, Upload } from "antd";
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import useAuth from "../auth/useAuth";
+import {addNewAttach} from "../app/features/teacherAttachmentList"
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-const StudentAttachFileModal = ({ open, close }) => {
+const TeacherAttachfileModal = ({ open, close }) => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const {fetchData} = useAuth()
+  const {id} = useParams()
+  const URL = `classrooms/${id}/teacher-attachment-create/`
+
+  const handleAttach = ({attach}) => {
+    const attachFile = new FormData()
+    attachFile.append("file", attach.file)
+    attachFile.append("classroom", id)
+    setLoading(true);
+    fetchData
+      .post(URL, attachFile)
+      .then((res) => {
+        dispatch(addNewAttach(res?.data))
+        setLoading(false);
+        close(false);
+        toast.success("Attach file uploaed successfully!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          })
+      })
+      .catch((err) => {
+        setLoading(false);
+        close(false);
+      });
+  };
+
+
   return (
     <Modal open={open} onCancel={() => close(false)} footer={null}>
       <div className="pt-[10px] pb-[10px] px-[10px] sm:px-[10px]">
@@ -11,7 +50,7 @@ const StudentAttachFileModal = ({ open, close }) => {
           Upload files
           </h3>
         </div>
-        <Form name="studentAttach" >
+        <Form name="teacherAttach"  onFinish={handleAttach} >
           <Form.Item name="attach" valuePropName="name">
             <Upload beforeUpload={() => false} >
               <div className="flex items-center justify-center w-full h-20 px-4 mb-3 transition bg-white border-2 border-gray-200 border-dashed appearance-none cursor-pointer hover:border-gray-200 focus:outline-none">
@@ -71,4 +110,4 @@ const StudentAttachFileModal = ({ open, close }) => {
   );
 };
 
-export default StudentAttachFileModal;
+export default TeacherAttachfileModal;
