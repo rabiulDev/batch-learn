@@ -87,6 +87,7 @@ const ChangePasswordModal = ({ openModal, setOpenModal }) => {
               <Input.Password
                 prefix={
                   <svg
+                    className="mr-3"
                     fill="none"
                     height="20"
                     viewBox="0 0 16 20"
@@ -119,7 +120,7 @@ const ChangePasswordModal = ({ openModal, setOpenModal }) => {
                   </svg>
                 }
                 size="large"
-                placeholder="......"
+                placeholder="••••••"
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
@@ -146,6 +147,7 @@ const ChangePasswordModal = ({ openModal, setOpenModal }) => {
               <Input.Password
                 prefix={
                   <svg
+                    className="mr-3"
                     fill="none"
                     height="20"
                     viewBox="0 0 16 20"
@@ -178,7 +180,7 @@ const ChangePasswordModal = ({ openModal, setOpenModal }) => {
                   </svg>
                 }
                 size="large"
-                placeholder="......"
+                placeholder="••••••"
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
@@ -212,6 +214,7 @@ const ChangePasswordModal = ({ openModal, setOpenModal }) => {
               <Input.Password
                 prefix={
                   <svg
+                  className="mr-3"
                     fill="none"
                     height="20"
                     viewBox="0 0 16 20"
@@ -244,7 +247,7 @@ const ChangePasswordModal = ({ openModal, setOpenModal }) => {
                   </svg>
                 }
                 size="large"
-                placeholder="......"
+                placeholder="••••••"
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
