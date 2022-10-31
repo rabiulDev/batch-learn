@@ -6,12 +6,12 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setFirstStepData } from "../app/features/teacherRegisterData";
 import TeacherRegisProcessBtn from "./TeacherRegisProcessBtn";
-import { toast } from "react-toastify";
 import PhoneInput from "react-phone-input-2";
+import displayFormError from "../utils/displayFormError";
 const { Option } = Select;
 
 const TeacherRegisterFirstStep = ({ setCurrent }) => {
-
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { teacherType } = useSelector((state) => state.teacherTypes);
   const { firstStepData } = useSelector((state) => state.teacherRegistrationData);
@@ -39,22 +39,13 @@ const TeacherRegisterFirstStep = ({ setCurrent }) => {
             setCurrent((prev) => prev + 1);
           }
         }).catch((err)=>{
-          setLoading(false)
-          toast.error("Phone number or password is not valid", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          })
-        })
+          displayFormError(form, err)
+        }).finally(()=>{setLoading(false)})
     }
   return (
     <div>
       <Form
+      form={form}
         onFinish={onFinish}
         layout="vertical"
         requiredMark="optional"

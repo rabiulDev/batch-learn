@@ -6,6 +6,7 @@ import axios from "axios";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { toast } from "react-toastify";
+import displayFormError from "../utils/displayFormError";
 const { Option } = Select;
 
 
@@ -13,7 +14,6 @@ const StudentRegister = () => {
   const [loading, setLoading] = useState(false)
   const [form] = Form.useForm();
   const navigate = useNavigate()
-
   const onFinish = (data) => {
     const regData = {
       email: data.email,
@@ -46,27 +46,10 @@ const StudentRegister = () => {
           });
           navigate("/login")
         }).catch((err)=>{
-          console.log(err)
-        })
+          displayFormError(form, err)
+        }).finally(()=>{setLoading(false)})
         
     }
-    ;
-  
-
-  // const prefixPhoneSelector = (
-  //   <Form.Item name="phonePrefix" noStyle>
-  //     <Select
-  //       initialvalues="+86"
-  //       style={{
-  //         width: 70,
-  //       }}
-  //     >
-  //       <Option value="+880">+880</Option>
-  //       <Option value="+860">+860</Option>
-  //       <Option value="+870">+870</Option>
-  //     </Select>
-  //   </Form.Item>
-  // );
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-auth-bg bg-no-repeat bg-top bg-cover object-cover py-[50px]">

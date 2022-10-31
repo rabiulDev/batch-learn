@@ -15,7 +15,7 @@ const ClassroomComment = () => {
   const { id } = useParams();
   const CREATE_COMMENT_URL = `classrooms/${id}/classroom-comment-create/`;
   const URL = `classrooms/${id}/classroom-comments/?page=1&page_size=10`;
-  const { isLoading, comments, results, isError } = useSelector(
+  const { results } = useSelector(
     (state) => state.comments
   );
   const { account } = useSelector((state) => state.accout);

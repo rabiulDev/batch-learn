@@ -1,0 +1,1 @@
+export const registerAccountApi = data => httpClient.post('/register')
